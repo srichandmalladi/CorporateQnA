@@ -18,15 +18,15 @@ export class RegistrationComponent implements OnInit {
     private toastr: ToastrService,
   ) {
     this.registrationForm = new FormGroup({
-      userName: new FormControl('', Validators.required),
+      userName: new FormControl('', [Validators.required]),
       fullName: new FormControl(''),
-      email: new FormControl('', Validators.email),
+      email: new FormControl('', [Validators.email]),
       position: new FormControl(''),
       company: new FormControl(''),
       location: new FormControl(''),
       passwords: new FormGroup({
         password: new FormControl('', [Validators.required, Validators.minLength(4)]),
-        confirmPassword: new FormControl('', Validators.required)
+        confirmPassword: new FormControl('', [Validators.required])
       },
         this.comparePasswords
       ),

@@ -2,7 +2,10 @@
   <div class="d-md-flex col-md-10">
     <div class="form-group col-md-3">
       <label>Keywords</label>
-      <input type="text" class="form-control border search" placeholder="&#xF002; Search" formControlName="keyword" (keyup)="filter()"/>
+      <div class="form-control border d-flex p-0 mw-100">
+        <i class="fa fa-search my-auto pl-2" aria-hidden="true"></i>
+        <input type="text" class="form-control border-0 w-100 h-75 my-auto" placeholder="Search" formControlName="keyword" (keyup)="filter()"/>
+      </div>
     </div>
     <div class="form-group col-md-2">
       <label>Category</label>
@@ -13,22 +16,16 @@
     </div>
     <div class="form-group col-md-2">
       <label>Show</label>
-      <select class="form-control" formControlName="show"  (change)="filter()">
+      <select class="form-control" formControlName="show" (change)="filter()">
         <option selected value="all">All</option>
-        <option value="myQuestions">My Questions</option>
-        <option>My Participation</option>
-        <option value="hot">Hot</option>
-        <option value="solved">Solved</option>
-        <option value="unsolved">Unsolved</option>
+        <option *ngFor="let filter of showFilters" value="{{filter.value}}">{{filter.name}}</option>
       </select>
     </div>
     <div class="form-group col-md-2">
       <label>Sort by</label>
-      <select class="form-control" formControlName="days"  (change)="filter()">
+      <select class="form-control" formControlName="days" (change)="filter()">
         <option selected value="all">All</option>
-        <option value="recent">Recent</option>
-        <option value="last10days">Last 10 Days</option>
-        <option value="last30days">Last 30 Days</option>
+        <option *ngFor="let filter of daysFilters" value="{{filter.value}}">{{filter.name}}</option>
       </select>
     </div>
     <button class="btn align-self-end mb-3 text-secondary" (click)="resetForm()">
@@ -44,7 +41,7 @@
     <div class="d-flex modal-header text-white py-2">
       <p class="m-0 p-1">Add Question</p>
       <button type="button" class="close" aria-label="Close">
-        <span aria-hidden="true" class="text-white" (click)="closeModal()">&times;</span>
+        <i class="fa fa-times text-white" aria-hidden="true" (click)="closeModal()"></i>
       </button>
     </div>
     <form [formGroup]="addQuestionForm">
@@ -52,6 +49,9 @@
         <div class="form-group col-md-8">
           <label>Question</label>
           <input type="text" class="form-control border" placeholder="Enter Your Question" formControlName="question">
+          <label class="text-danger" *ngIf="addQuestionForm.get('question').touched && addQuestionForm.get('question').errors">
+            Enter Question
+          </label>
         </div>
 
         <div class="form-group col-md-12">
@@ -62,6 +62,9 @@
             <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
             </ngx-editor-menu>
           </div>
+          <label class="text-danger" *ngIf="addQuestionForm.get('description').touched && addQuestionForm.get('description').errors">
+            Add description to your question
+          </label>
         </div>
 
         <div class="form-group col-md-4">
@@ -69,6 +72,9 @@
           <select class="form-control" formControlName="categoryId">
             <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
           </select>
+          <label class="text-danger" *ngIf="addQuestionForm.get('categoryId').touched && addQuestionForm.get('categoryId').errors">
+            Category is Required
+          </label>
         </div>
       </div>
     </form>

@@ -2,8 +2,8 @@
   <div class="selected-question pb-4 pt-3 pl-3">
     <div class="d-flex justify-content-between">
       <div class="d-flex">
-        <img src="{{displayQuestion.askedUserPic}}" class="avatar-image rounded-circle profile-pic-min">
-        <div class="ml-2 text-black">{{displayQuestion.askedBy}}</div>
+        <img src="{{displayQuestion.userPicture}}" class="avatar-image rounded-circle profile-pic-min">
+        <div class="ml-2 text-black">{{displayQuestion.userName}}</div>
         <div class="ml-2 text-secondary">{{displayQuestion.dateCreated | amTimeAgo}}</div>
       </div>
       <div class="mr-3 btn">
@@ -38,7 +38,7 @@
         </div>
       </div>
       <div [innerHTML]="answer.answer" class="ml-5 font-size-14"></div>
-      <div class="ml-5 d-flex form-group" *ngIf="displayQuestion.askedUser==loggedUser">
+      <div class="ml-5 d-flex form-group" *ngIf="displayQuestion.userId==loggedUser">
         <input type="checkbox" class="mt-1" [checked]="answer.isBestAnswer" (change)="changeBestAnswer(answer.id)">
         <p class="ml-2 font-size-14"> Mark as Best solution</p>
       </div>
@@ -58,6 +58,7 @@
           <i class="fa fa-paper-plane ml-auto mr-2 fa-2x text-secondary" aria-hidden="true" (click)="submitAnswer()"></i>
         </div>
       </div>
+      <label class="text-danger" *ngIf="answerForm.get('answer').touched && answerForm.get('answer').errors"> Add Answer </label>
     </form>
   </div>
 </div>

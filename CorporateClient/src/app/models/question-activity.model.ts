@@ -2,9 +2,9 @@ export class QuestionActivity {
   id: number;
   question: string;
   description: string;
-  askedUser: number;
-  askedBy: string;
-  askedUserPic: string;
+  userId: number;
+  userName: string;
+  userPicture: string;
   categoryId: number;
   upVotes: number;
   views: number;
@@ -16,9 +16,9 @@ export class QuestionActivity {
     this.id = args.id;
     this.question = args.question;
     this.description = args.description;
-    this.askedUser = args.askedUser;
-    this.askedBy = args.askedBy;
-    this.askedUserPic = args.askedUserPic;
+    this.userId = args.userId;
+    this.userName = args.userName;
+    this.userPicture = args.userPicture;
     this.categoryId = args.categoryId;
     this.upVotes = args.upVotes;
     this.views = args.views;

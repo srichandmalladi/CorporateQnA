@@ -19,8 +19,8 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService)
   {
     this.loginForm = new FormGroup({
-      userName: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
+      userName: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required])
     });
   }
 

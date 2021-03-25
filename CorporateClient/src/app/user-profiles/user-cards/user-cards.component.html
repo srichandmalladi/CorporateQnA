@@ -1,7 +1,10 @@
 <form class="border px-3 py-2 m-0">
   <div class="form-group" [formGroup]="userFilter">
     <label>Users</label>
-    <input type="text" class="form-control col-md-3 border search" formControlName="searchUser" placeholder="&#xF002; Search" (keyup)="filterUsers()">
+    <div class="form-control border col-md-3 d-flex p-0 mw-100">
+      <i class="fa fa-search my-auto pl-2" aria-hidden="true"></i>
+      <input type="text" class="form-control border-0 w-100 h-75 my-auto" placeholder="Search" formControlName="searchUser" (keyup)="filterUsers()" />
+    </div>
   </div>
 </form>
 <div>

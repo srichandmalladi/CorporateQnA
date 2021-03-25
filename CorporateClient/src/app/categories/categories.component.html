@@ -2,7 +2,10 @@
   <div class="d-md-flex col-md-11">
     <div class="form-group col-md-3">
       <label>Keywords</label>
-      <input type="text" name="search" formControlName="searchText" class="form-control border search" placeholder="&#xF002; Search" (keyup)="filterCategories()">
+      <div class="form-control border d-flex p-0 mw-100">
+        <i class="fa fa-search my-auto pl-2" aria-hidden="true"></i>
+        <input type="text" class="form-control border-0 w-100 h-75 my-auto" placeholder="Search" formControlName="searchText" (keyup)="filterCategories()" />
+      </div>
     </div>
 
     <div class="form-group col-md-2">
@@ -12,7 +15,7 @@
       </select>
     </div>
 
-    <button class="btn align-self-end mb-3 text-secondary" (click)="categoryFilter.reset()">
+    <button class="btn align-self-end mb-3 text-secondary" (click)="resetFilters()">
       <i class="fa fa-repeat" aria-hidden="true"></i>
       <span> Reset</span>
     </button>
@@ -24,7 +27,7 @@
   <div class="d-flex modal-header text-white">
     <div> Add Category </div>
     <button type="button" class="close" aria-label="Close">
-      <span aria-hidden="true" class="text-white" (click)="closeModal()">&times;</span>
+      <i class="fa fa-times text-white" aria-hidden="true" (click)="closeModal()"></i>
     </button>
   </div>
   <form [formGroup]="addCategoryForm">
@@ -32,10 +35,16 @@
       <div class="form-group col-sm-9">
         <label>Category Name</label>
         <input type="text" class="form-control border" placeholder="Enter Category Name" formControlName="name">
+        <label class="text-danger" *ngIf="addCategoryForm.get('name').touched && addCategoryForm.get('name').errors">
+          Enter Category Name
+        </label>
       </div>
       <div class="form-group col-sm-9">
         <label>Description</label>
         <textarea class="form-control bg-whitesmoke font-size-14" rows="4" placeholder="Enter your text here" formControlName="description"></textarea>
+        <label class="text-danger" *ngIf="addCategoryForm.get('description').touched && addCategoryForm.get('description').errors">
+          Add Category Description
+        </label>
       </div>
     </div>
     <div class="modal-footer border-0">

@@ -6,7 +6,7 @@
     <div *ngFor="let question of filteredQuestions" class="border" (click)="questionSelected(question.id)" [ngClass]="{'active-question': selectedQuestion == question}">
       <div [ngClass]="{'resolved-question': question.isSolved}"></div>
       <div class="d-flex pt-3 pl-1 pr-3">
-        <img src="{{question.askedUserPic}}" class="ml-3 rounded-circle profile-pic-min">
+        <img src="{{question.userPicture}}" class="ml-3 rounded-circle profile-pic-min">
         <div class="ml-0 pl-3">{{question.question}}? </div>
       </div>
       <div class="d-flex">

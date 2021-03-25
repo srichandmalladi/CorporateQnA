@@ -62,7 +62,7 @@ export class HomeComponent implements OnInit {
           this.questions = data;
         }
         else {
-          this.questions = data.filter(temp => temp.askedUser == this.user.id);
+          this.questions = data.filter(temp => temp.userId == this.user.id);
         }
         this.filteredQuestions = this.questions;
       });
@@ -91,11 +91,16 @@ export class HomeComponent implements OnInit {
     activity.queId = qId;
     activity.userId = +localStorage['userId'];
     activity.activity = Activity.view;
-    this.activityService.addView(activity).subscribe(data => {
-      if (data!=0) {
-        this.questions.find(temp => temp.id == qId).views += 1;
+    this.activityService.addView(activity).subscribe(
+      data => {
+        if (data!=0) {
+          this.questions.find(temp => temp.id == qId).views += 1;
+        }
+      },
+      err => {
+        console.log(err);
       }
-    });
+    );
   }
 
   upvote(qId: number, event: Event) {
@@ -104,18 +109,22 @@ export class HomeComponent implements OnInit {
     activity.queId = qId;
     activity.userId = +localStorage['userId'];
     activity.activity = Activity.upVote;
-    this.activityService.addUpVote(activity).subscribe(data => {
-      if (data!=0) {
-        this.questions.find(temp => temp.id == qId).upVotes += 1;
+    this.activityService.addUpVote(activity).subscribe(
+      data => {
+        if (data!=0) {
+          this.questions.find(temp => temp.id == qId).upVotes += 1;
+        }
+      },
+      err => {
+        console.log(err);
       }
-    });
+    );
   }
 
   filterQuestions(filterData: any) {
     this.filteredQuestions = this.questions;
-
-    this.filterByKeyword(filterData.keyword);
-    this.filterByCategory(filterData.categoryId);
+    this.filterByKeyword(filterData.keyword ? filterData.keyword:'');
+    this.filterByCategory(filterData.categoryId ? filterData.categoryId:0);
     this.filterByShow(filterData.show);
     this.filterByDays(filterData.days);
   }
@@ -132,7 +141,7 @@ export class HomeComponent implements OnInit {
 
   filterByShow(show: string) {
     if (show == 'myQuestions') {
-      this.filteredQuestions = this.filteredQuestions.filter(temp => temp.askedUser == localStorage['userId']);
+      this.filteredQuestions = this.filteredQuestions.filter(temp => temp.userId == localStorage['userId']);
     }
     if (show == 'hot') {
       this.filteredQuestions.sort((a, b) => { return b.upVotes - a.upVotes })

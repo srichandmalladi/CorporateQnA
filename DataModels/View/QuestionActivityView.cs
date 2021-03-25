@@ -10,11 +10,11 @@ namespace DataModels.View
 
         public string Description { get; set; }
 
-        public int AskedUser { get; set; }
+        public int UserId { get; set; }
 
-        public string AskedBy { get; set; }
+        public string UserName { get; set; }
 
-        public string AskedUserPic { get; set; }
+        public string UserPicture { get; set; }
 
         public int CategoryId { get; set; }
 

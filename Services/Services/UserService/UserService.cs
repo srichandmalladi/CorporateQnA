@@ -94,9 +94,9 @@ namespace Services.Services
             usersData.ForEach(temp => {
                 var user = this.Mapper.Map<UserProfile>(temp);
 
-                user.Asked = this.DataBase.SingleOrDefault<int>("select COUNT(Id) from Questions where UserId=@0", temp.Id);
-                user.Answered = this.DataBase.SingleOrDefault<int>("select COUNT(Id) from Answers where UserId=@0", temp.Id);
-                user.Solved = this.DataBase.SingleOrDefault<int>("select COUNT(Id) from Answers where UserId=@0 and IsBestAnswer=1", temp.Id);
+                user.NoOfQuestionsAsked = this.DataBase.SingleOrDefault<int>("select COUNT(Id) from Questions where UserId=@0", temp.Id);
+                user.NoOfQuestionsAnswered = this.DataBase.SingleOrDefault<int>("select COUNT(Id) from Answers where UserId=@0", temp.Id);
+                user.NoOfQuestionsSolved = this.DataBase.SingleOrDefault<int>("select COUNT(Id) from Answers where UserId=@0 and IsBestAnswer=1", temp.Id);
                 user.Likes = this.DataBase.SingleOrDefault<int>("select COUNT(QAActivity.Id) from QAActivity inner join Answers on Answers.Id=QAActivity.AnsId and Answers.UserId=@0 and QAActivity.Activity=@1", temp.Id, Activity.Like);
                 user.Dislikes = this.DataBase.SingleOrDefault<int>("select COUNT(QAActivity.Id) from QAActivity inner join Answers on Answers.Id=QAActivity.AnsId and Answers.UserId=@0 and QAActivity.Activity=@1", temp.Id, Activity.Dislike);
                 result.Add(user);

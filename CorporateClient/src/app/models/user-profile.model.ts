@@ -7,9 +7,9 @@ export class UserProfile {
   location: string;
   likes: number;
   dislikes: number;
-  asked: number;
-  answered: number;
-  solved: number;
+  noOfQuestionsAsked: number;
+  noOfQuestionsAnswered: number;
+  noOfQuestionsSolved: number;
 
   constructor(args) {
     this.id = args.id;
@@ -20,8 +20,8 @@ export class UserProfile {
     this.location = args.location;
     this.likes = args.likes;
     this.dislikes = args.dislikes;
-    this.asked = args.asked;
-    this.answered = args.answered;
-    this.solved = args.solved;
+    this.noOfQuestionsAsked = args.noOfQuestionsAsked;
+    this.noOfQuestionsAnswered = args.noOfQuestionsAnswered;
+    this.noOfQuestionsSolved = args.noOfQuestionsSolved;
   }
 }

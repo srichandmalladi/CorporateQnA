@@ -30,9 +30,10 @@ export class CategoriesComponent implements OnInit {
     private categoryService: CategoryService)
   {
     this.addCategoryForm = new FormGroup({
-      'name': new FormControl('', Validators.required),
-      'description': new FormControl('')
+      name: new FormControl('', [Validators.required]),
+      description: new FormControl('', [Validators.required])
     });
+
     this.categoryFilter = new FormGroup({
       searchText: new FormControl(''),
       showFilter: new FormControl('')
@@ -53,17 +54,23 @@ export class CategoriesComponent implements OnInit {
   }
 
   addCategory() {
-    this.categoryService.addCategory(this.addCategoryForm.value).subscribe(data => {
-      if (data!=0) {
-        this.toastr.success("Category Added");
-        this.getCategoriesActivity();
-        this.closeModal();
+    this.categoryService.addCategory(this.addCategoryForm.value).subscribe(
+      data => {
+        if (data!=0) {
+          this.toastr.success("Category Added");
+          this.getCategoriesActivity();
+          this.closeModal();
+        }
+        else {
+          this.toastr.error("Category add failed");
+          this.closeModal();
+        }
+      },
+      err => {
+        this.toastr.error("Failed to add category");
+        console.log(err);
       }
-      else {
-        this.toastr.error("Category add failed");
-        this.closeModal();
-      }
-    });
+    );
   }
 
   getCategoriesActivity() {
@@ -75,5 +82,10 @@ export class CategoriesComponent implements OnInit {
 
   filterCategories() {
     this.filteredCategories = this.categories.filter(category => category.name.toLowerCase().match(this.categoryFilter.value['searchText']));
+  }
+
+  resetFilters() {
+    this.categoryFilter.reset();
+    this.getCategoriesActivity();
   }
 }

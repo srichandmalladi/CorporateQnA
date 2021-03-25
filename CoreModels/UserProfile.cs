@@ -19,10 +19,10 @@ namespace CoreModels
 
         public int Dislikes { get; set; }
 
-        public int Asked { get; set; }
+        public int NoOfQuestionsAsked { get; set; }
 
-        public int Answered { get; set; }
+        public int NoOfQuestionsAnswered { get; set; }
 
-        public int Solved { get; set; }
+        public int NoOfQuestionsSolved { get; set; }
     }
 }
