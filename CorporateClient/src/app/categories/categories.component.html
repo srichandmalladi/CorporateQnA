@@ -1,0 +1,50 @@
+<form [formGroup]="categoryFilter" class="d-md-flex pt-3 justify-content-between filters m-0">
+  <div class="d-md-flex col-md-11">
+    <div class="form-group col-md-3">
+      <label>Keywords</label>
+      <input type="text" name="search" formControlName="searchText" class="form-control border search" placeholder="&#xF002; Search" (keyup)="filterCategories()">
+    </div>
+
+    <div class="form-group col-md-2">
+      <label>Show</label>
+      <select class="form-control" formControlName="showFilter">
+        <option selected>Popular</option>
+      </select>
+    </div>
+
+    <button class="btn align-self-end mb-3 text-secondary" (click)="categoryFilter.reset()">
+      <i class="fa fa-repeat" aria-hidden="true"></i>
+      <span> Reset</span>
+    </button>
+  </div>
+  <button class="btn purple text-white align-self-end mb-3 mr-3" (click)="openModal(categorymodal)">+Category</button>
+</form>
+
+<ng-template #categorymodal>
+  <div class="d-flex modal-header text-white">
+    <div> Add Category </div>
+    <button type="button" class="close" aria-label="Close">
+      <span aria-hidden="true" class="text-white" (click)="closeModal()">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="addCategoryForm">
+    <div class="modal-body row">
+      <div class="form-group col-sm-9">
+        <label>Category Name</label>
+        <input type="text" class="form-control border" placeholder="Enter Category Name" formControlName="name">
+      </div>
+      <div class="form-group col-sm-9">
+        <label>Description</label>
+        <textarea class="form-control bg-whitesmoke font-size-14" rows="4" placeholder="Enter your text here" formControlName="description"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer border-0">
+      <button type="button" class="btn" (click)="closeModal()">Cancel</button>
+      <button class="btn purple text-white" [disabled]="!addCategoryForm.valid" (click)="addCategory()">Save</button>
+    </div>
+  </form>
+</ng-template>
+
+<div class="d-flex flex-wrap pt-2">
+  <app-category-card *ngFor="let category of filteredCategories" class="col-md-4" [category]="category"></app-category-card>
+</div>

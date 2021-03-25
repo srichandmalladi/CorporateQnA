@@ -1,0 +1,30 @@
+<div class="bg-white border m-3">
+  <div class="d-flex p-3">
+    <div>
+      <img src="{{user.profilePictureURL}}" class="rounded-circle mr-3 profile-pic">
+    </div>
+    <div>
+      <h6>{{user.userName}}</h6>
+      <p class="m-0">{{user.position}}</p>
+      <p class="m-0">{{user.company}}</p>
+      <div class="d-flex align-items-center">
+        <i class="fa fa-thumbs-up px-1 text-success"></i><span class="mr-4">{{user.likes}}</span>
+        <i class="fa fa-thumbs-down px-1 text-danger"></i><span>{{user.dislikes}}</span>
+      </div>
+    </div>
+  </div>
+  <div class="d-flex border-top">
+    <div class="d-flex flex-column align-items-center border-right p-3">
+      <div>{{user.asked}}</div>
+      <div class="text-muted font-size-12">Questions Asked</div>
+    </div>
+    <div class="d-flex flex-column align-items-center border-right p-3">
+      <div>{{user.answered}}</div>
+      <div class="text-muted font-size-12">Questions Answered</div>
+    </div>
+    <div class="d-flex flex-column align-items-center p-3">
+      <div>{{user.solved}}</div>
+      <div class="text-muted font-size-12">Questions Solved</div>
+    </div>
+  </div>
+</div>

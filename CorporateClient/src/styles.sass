@@ -1,0 +1,233 @@
+@import '~ngx-toastr/toastr.css'
+
+body
+    background-color: #f4f5f8
+
+app-top-nav-bar
+    background-color: #f8f8f9
+
+.question-list
+    background-color: #ffffff
+
+.answers-list
+    background-color: #f2f1f0
+
+.profile-pic-min
+    height: 30px
+    width: 30px
+
+.profile-pic
+    height: 60px
+    width: 60px
+
+.cursor-pointer
+    cursor: pointer
+.bg-gray
+    background-color: #e4e6e9
+    border-radius: 5px
+
+.bg-light-gray
+    background-color: #f4f5f8
+.font-size-14
+    font-size: 14px
+
+.font-size-12
+    font-size: 12px
+
+.bg-whitesmoke
+    background-color: whitesmoke
+
+.modal-header
+    background-color: #515968
+
+.active-question
+     background-image: linear-gradient(to left, rgb(118,97,139) 0.1%, rgb(118,97,139) 0.4%, rgb(242,241,240) 0.6%, rgb(242,241,240) 100%)
+
+.forum
+    background-color: #505661
+
+.wrapper 
+    display: flex
+    align-items: center
+    flex-direction: column 
+    justify-content: center
+    width: 100%
+    padding: 20px
+    .wrapped-div 
+        -webkit-border-radius: 10px 10px 10px 10px
+        border-radius: 10px 10px 10px 10px
+        background: #2e3137
+        padding: 30px
+        width: 90%
+        max-width: 500px
+        position: relative
+        padding: 0px
+        -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3)
+        box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3)
+        .tab-header
+            text-align: center
+            display: flex
+            justify-content: center
+            h2.active 
+                color: #fff
+                border-bottom: 4px solid #fff
+            h2 
+                text-align: center
+                font-size: 18px
+                font-weight: 600
+                padding: 30px 40px 10px 40px
+                cursor: pointer
+                color: #545d6a
+                border-bottom: 2px solid #545d6a
+            h2:focus 
+                outline: none
+
+input.form-control
+    border: 1px solid #636b7b
+    input.form-control:focus
+        box-shadow: none
+
+div.form-group label:not(.text-danger)
+    color: #545d6a
+    font-weight: 700
+
+div.form-group.required>label:first-child:after
+    content: "*"
+    color: #fff
+    padding-left: 5px
+
+#toast-container > div 
+    opacity: 1
+
+form
+    margin: 0px 16px
+
+div.form-group
+    input.invalid
+        border: 1px solid #dc3545 
+    label:first-child
+        text-transform: uppercase
+        font-size: 0.9rem
+
+.purple
+    background-color: #76618b
+
+.text-purple
+    color: #76618b
+
+.title-bar
+    height: 50px
+
+.keka-logo
+    background-color: rgb(82,67,97)
+    width: 100px
+    padding: 10px 10px 14px 10px
+
+.user-image
+    margin-top: -5px
+    width: 40px
+    height: 40px
+
+.app-container
+    padding-top: 50px
+    .main-container
+        margin-left:100px
+        
+.top-nav
+    height: 44px
+    background-color: #fff
+    box-shadow: 3px 0px 6px 0px #d8dde6
+    border-bottom: 2px solid rgb(212,215,220)
+
+a
+    color: white
+    cursor: pointer
+
+a:hover
+    text-decoration: none
+    color: white
+
+.top-nav li
+    position: relative
+    padding-top: 12px
+    padding-left: 5px
+
+.top-nav-link, .top-nav-link:hover
+    color: rgb(134,134,134) !important
+    font-size: 12px
+    font-weight: 600
+
+.active a
+    color: rgb(35,35,35) !important
+    font-size: 12px
+    font-weight: 600
+
+.top-nav.nav li a:after 
+    content: ''
+    position: absolute
+    bottom: -1px
+    border-left: 7px solid transparent
+    border-right: 7px solid transparent
+    border-bottom: 7px solid
+    transition: 0.3s
+    opacity: 0
+    left: 6%
+    border-bottom-color: rgb(118,97,139)
+ 
+.top-nav li.active a:after
+   opacity: 1
+   left: 40%
+
+.side-bar 
+     color: #ffffff
+     background-color: #3e4249
+     position: fixed
+
+.side-bar li 
+     width: 100px
+     padding: 15px 15px
+     text-align: center
+
+.filters
+    box-shadow: 3px 0px 6px 0px #d8dde6
+    border-bottom: 2px solid rgb(212,215,220)
+
+.resolved-question
+     position: absolute
+     left: -13px
+     transform: rotate(-45deg)
+     border-left: 20px solid transparent
+     margin-top: -3px
+     border-right: 20px solid transparent
+     border-bottom: 20px solid #28a745
+
+.NgxEditor__Wrapper
+     border: 2px solid  rgb(212,215,220) !important
+     font-size: 13px
+     border-radius: 6px
+     padding-bottom: 10px
+     background-color: white !important
+
+
+.NgxEditor
+     height: 150px
+
+.NgxEditor__Wrapper .NgxEditor__MenuBar
+     border-bottom: 0 !important
+
+.NgxEditor__MenuBar
+     background-color: white
+
+.expand-editor .NgxEditor
+     height: 300px !important
+     overflow-y: scroll
+
+.user-profile-link
+    color: black
+    text-decoration: none
+    cursor: pointer
+    background-image: linear-gradient(to bottom, white 0%, white 95%, #70588a 95%, #70588a 100%  )
+
+.search
+    font-family: Arial, FontAwesome
+    font-size: 14px

@@ -1,0 +1,63 @@
+<div class="border">
+  <div class="selected-question pb-4 pt-3 pl-3">
+    <div class="d-flex justify-content-between">
+      <div class="d-flex">
+        <img src="{{displayQuestion.askedUserPic}}" class="avatar-image rounded-circle profile-pic-min">
+        <div class="ml-2 text-black">{{displayQuestion.askedBy}}</div>
+        <div class="ml-2 text-secondary">{{displayQuestion.dateCreated | amTimeAgo}}</div>
+      </div>
+      <div class="mr-3 btn">
+        <i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i>
+        <span class="font-size-14"> Report this</span>
+      </div>
+    </div>
+    <h6>{{displayQuestion.question}}</h6>
+    <div [innerHTML]="displayQuestion.description" class="text-secondary text-small font-size-14"></div>
+  </div>
+  <div class="bg-gray pl-3 py-2 border">
+    Answers ({{displayQuestion.noOfAnswers}})
+  </div>
+  <div *ngFor="let answer of answers" class="pl-3 pt-3">
+    <div>
+      <div class="d-flex justify-content-between">
+        <div class="d-flex">
+          <img src="{{answer.profilePic}}" class="rounded-circle profile-pic-min">
+          <div class="ml-2">{{answer.userName}}</div>
+          <div class="ml-2 text-secondary">{{answer.dateCreated | amTimeAgo}}</div>
+        </div>
+        <div>
+          <i class="fa fa-thumbs-o-up mr-2 mr-3 text-secondary btn px-1"
+             [ngClass]="{'text-success':answer.likes!=0}" aria-hidden="true" (click)="likeAnswer(answer.id)">
+            <span>{{answer.likes}}</span>
+          </i>
+
+          <i class="fa fa-thumbs-o-down mr-2 text-secondary btn px-1"
+             [ngClass]="{'text-danger':answer.dislikes!=0}" aria-hidden="true" (click)="dislikeAnswer(answer.id)">
+            <span>{{answer.dislikes}}</span>
+          </i>
+        </div>
+      </div>
+      <div [innerHTML]="answer.answer" class="ml-5 font-size-14"></div>
+      <div class="ml-5 d-flex form-group" *ngIf="displayQuestion.askedUser==loggedUser">
+        <input type="checkbox" class="mt-1" [checked]="answer.isBestAnswer" (change)="changeBestAnswer(answer.id)">
+        <p class="ml-2 font-size-14"> Mark as Best solution</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group editor mt-2">
+    <form [formGroup]="answerForm" class="answer-form">
+      <div class="NgxEditor__Wrapper">
+        <div class="d-flex justify-content-end  bg-gray py-1">
+          <i class="fa fa-expand text-secondary fa-2x" aria-hidden="true" (click)="expandEditor()"></i>
+        </div>
+        <ngx-editor [editor]="editor" editable="true" placeholder="Enter Answer" formControlName="answer" [ngClass]="{'expand-editor':expand}">
+        </ngx-editor>
+        <div class="d-flex">
+          <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
+          <i class="fa fa-paper-plane ml-auto mr-2 fa-2x text-secondary" aria-hidden="true" (click)="submitAnswer()"></i>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

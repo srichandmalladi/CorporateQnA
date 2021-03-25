@@ -1,0 +1,53 @@
+<app-filter *ngIf="showFilters" (refreshQuestions)="refreshList()" (filterQuestions)="filterQuestions($event)"></app-filter>
+<app-display-profile *ngIf="!showFilters" [user]="user" (loadQuestions)="loadQuestions($event)"></app-display-profile>
+
+<div class="m-3 d-sm-flex question-list">
+  <div class="col-sm-7 px-0">
+    <div *ngFor="let question of filteredQuestions" class="border" (click)="questionSelected(question.id)" [ngClass]="{'active-question': selectedQuestion == question}">
+      <div [ngClass]="{'resolved-question': question.isSolved}"></div>
+      <div class="d-flex pt-3 pl-1 pr-3">
+        <img src="{{question.askedUserPic}}" class="ml-3 rounded-circle profile-pic-min">
+        <div class="ml-0 pl-3">{{question.question}}? </div>
+      </div>
+      <div class="d-flex">
+        <div class="ml-3 pl-3" (click)="upvote(question.id,$event)">
+          <i class="fa fa-chevron-up text-secondary" aria-hidden="true"></i>
+          <div class="text-right mr-1">{{question.upVotes}}</div>
+        </div>
+        <div class="font-size-12 question-description ml-2 pl-3 pr-3 mb-3 font-size-14 text-secondary" [innerHTML]="question.description">
+        </div>
+      </div>
+      <div class="d-flex justify-content-between  ml-5 pl-3 pr-3 mb-3">
+        <div class="d-flex">
+          <div>
+            <i class="fa fa-eye mr-1 text-secondary" aria-hidden="true"></i>
+            <span class="font-size-12 mr-2">{{question.views}} Views</span>
+          </div>
+          <div class="font-size-12 btn p-1 bg-whitesmoke border">
+            {{question.noOfAnswers}} Answers
+          </div>
+        </div>
+        <div class="pr-3 font-size-14">
+          <div *ngIf="!question.isSolved else resolved" class="text-secondary">
+            {{question.dateCreated | amTimeAgo}}
+          </div>
+          <ng-template #resolved>
+            <span class="text-success">Resolved</span>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-5 px-0 d-flex  answers-list">
+    <div *ngIf = "!isQuestionSelected; then thenBlock else elseBlock"></div>
+      <ng-template #thenBlock>
+        <div class="d-flex-column w-100 align-self-center">
+          <i class="fa fa-arrow-left text-secondary text-center fa-5x d-block" aria-hidden="false"></i>
+          <p class="text-center">Select a Question to See Details</p>
+        </div>
+      </ng-template>
+      <ng-template #elseBlock>
+        <app-answers [displayQuestion]="selectedQuestion" class="w-100 answers-list"></app-answers>
+      </ng-template>
+  </div>
+</div>

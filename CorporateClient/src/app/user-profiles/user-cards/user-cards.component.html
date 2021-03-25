@@ -1,0 +1,12 @@
+<form class="border px-3 py-2 m-0">
+  <div class="form-group" [formGroup]="userFilter">
+    <label>Users</label>
+    <input type="text" class="form-control col-md-3 border search" formControlName="searchUser" placeholder="&#xF002; Search" (keyup)="filterUsers()">
+  </div>
+</form>
+<div>
+  <div class="d-flex flex-wrap">
+    <app-user-card *ngFor="let user of filteredUsers" [user]="user" (click)="showUser(user)"></app-user-card>
+  </div>
+</div>
+

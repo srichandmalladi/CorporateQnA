@@ -1,0 +1,22 @@
+<div class="title-bar d-flex justify-content-between fixed-top navbar-expand-sm purple">
+     <img src="https://c.keka.com/static/images/logos/KekaLogoWhite.png" alt="keka logo" class="keka-logo"/>
+     <div class="text-white pt-2">
+          <div class="d-flex">
+               <p class="px-2 pt-1">{{currentDate | date: 'd MMM yyyy'}}</p>
+               <i class="fa fa-sun-o text-white px-2 pt-2" aria-hidden="true"></i>
+               <div class="top-menu">
+                   <div class="d-flex px-2 cursor-pointer" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" *ngIf="userDetails">
+                        <div class="pt-1">
+                            {{userDetails.userName}}
+                        </div>
+                        <div>
+                            <img src="{{userDetails.profilePictureURL}}" class="user-image ml-3 rounded-circle">
+                        </div>
+                   </div>
+                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                       <div class="btn p-0 px-1" (click)="onLogout()">LogOut</div>
+                   </div>
+               </div>
+          </div>
+     </div>
+</div>

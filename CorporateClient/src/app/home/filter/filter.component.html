@@ -1,0 +1,80 @@
+<form [formGroup]="filtersForm" class="pt-3 filters m-0 d-md-flex justify-content-between">
+  <div class="d-md-flex col-md-10">
+    <div class="form-group col-md-3">
+      <label>Keywords</label>
+      <input type="text" class="form-control border search" placeholder="&#xF002; Search" formControlName="keyword" (keyup)="filter()"/>
+    </div>
+    <div class="form-group col-md-2">
+      <label>Category</label>
+      <select class="form-control" formControlName="categoryId"  (change)="filter()">
+        <option selected value=0>All</option>
+        <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label>Show</label>
+      <select class="form-control" formControlName="show"  (change)="filter()">
+        <option selected value="all">All</option>
+        <option value="myQuestions">My Questions</option>
+        <option>My Participation</option>
+        <option value="hot">Hot</option>
+        <option value="solved">Solved</option>
+        <option value="unsolved">Unsolved</option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label>Sort by</label>
+      <select class="form-control" formControlName="days"  (change)="filter()">
+        <option selected value="all">All</option>
+        <option value="recent">Recent</option>
+        <option value="last10days">Last 10 Days</option>
+        <option value="last30days">Last 30 Days</option>
+      </select>
+    </div>
+    <button class="btn align-self-end mb-3 text-secondary" (click)="resetForm()">
+      <i class="fa fa-repeat" aria-hidden="true"></i>
+      <span> Reset</span>
+    </button>
+  </div>
+  <button class="btn purple text-white align-self-end mb-3 mr-3" (click)="openModal(modal)">+Question</button>
+</form>
+
+<ng-template #modal>
+  <div class="d-flex-column">
+    <div class="d-flex modal-header text-white py-2">
+      <p class="m-0 p-1">Add Question</p>
+      <button type="button" class="close" aria-label="Close">
+        <span aria-hidden="true" class="text-white" (click)="closeModal()">&times;</span>
+      </button>
+    </div>
+    <form [formGroup]="addQuestionForm">
+      <div class="modal-body">
+        <div class="form-group col-md-8">
+          <label>Question</label>
+          <input type="text" class="form-control border" placeholder="Enter Your Question" formControlName="question">
+        </div>
+
+        <div class="form-group col-md-12">
+          <label>Description</label>
+          <div class="editor border">
+            <ngx-editor [editor]="editor" formControlName="description">
+            </ngx-editor>
+            <ngx-editor-menu [editor]="editor" [toolbar]="toolbar">
+            </ngx-editor-menu>
+          </div>
+        </div>
+
+        <div class="form-group col-md-4">
+          <label>Category</label>
+          <select class="form-control" formControlName="categoryId">
+            <option *ngFor="let category of categories" value={{category.id}}>{{category.name}}</option>
+          </select>
+        </div>
+      </div>
+    </form>
+    <div class="modal-footer border-0">
+      <button class="btn" (click)="closeModal()">Cancel</button>
+      <button class="btn purple text-white" (click)="addQuestion()"[disabled]="!addQuestionForm.valid">Post</button>
+    </div>
+  </div>
+</ng-template>
