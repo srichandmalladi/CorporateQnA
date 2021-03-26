@@ -1,15 +1,18 @@
 <div class="border">
   <div class="selected-question pb-4 pt-3 pl-3">
     <div class="d-flex justify-content-between">
+
       <div class="d-flex">
         <img src="{{displayQuestion.userPicture}}" class="avatar-image rounded-circle profile-pic-min">
         <div class="ml-2 text-black">{{displayQuestion.userName}}</div>
         <div class="ml-2 text-secondary">{{displayQuestion.dateCreated | amTimeAgo}}</div>
       </div>
+
       <div class="mr-3 btn">
         <i class="fa fa-exclamation-circle text-danger" aria-hidden="true"></i>
         <span class="font-size-14"> Report this</span>
       </div>
+
     </div>
     <h6>{{displayQuestion.question}}</h6>
     <div [innerHTML]="displayQuestion.description" class="text-secondary text-small font-size-14"></div>
