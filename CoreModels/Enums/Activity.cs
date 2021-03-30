@@ -1,4 +1,4 @@
-﻿namespace CoreModels.Enums
+﻿namespace CorporateQnA.Model
 {
     public enum Activity
     {

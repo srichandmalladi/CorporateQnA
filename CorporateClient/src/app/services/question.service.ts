@@ -9,16 +9,16 @@ import { QuestionActivity } from '../models/question-activity.model';
 
 export class QuestionService {
 
-  private baseURL: string = "/api/questions/";
+  private baseURL: string = "/api/question/";
 
   constructor(private route: HttpClient) { }
 
 
   getQuestionsActivity() {
-    return this.route.get<QuestionActivity[]>(this.baseURL + "getQuestionsActivity");
+    return this.route.get<QuestionActivity[]>(this.baseURL + "activities");
   }
 
   getQuestionsAnswered(id: number) {
-    return this.route.get<QuestionActivity[]>(this.baseURL + "getQuestionsAnswered/"+id);
+    return this.route.get<QuestionActivity[]>(this.baseURL + "getAnsweredQuestions/"+id);
   }
 }

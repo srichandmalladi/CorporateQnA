@@ -1,6 +1,6 @@
 ﻿using PetaPoco;
 
-namespace DataModels
+namespace CorporateQnA.Data
 {
     [TableName("Users")]
     public class Users

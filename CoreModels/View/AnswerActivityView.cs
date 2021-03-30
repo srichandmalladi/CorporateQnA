@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace DataModels.View
+namespace CorporateQnA.Model.View
 {
-    public class AnswersActivityView
+    public class AnswerActivityView
     {
         public int Id { get; set; }
 
@@ -15,6 +15,10 @@ namespace DataModels.View
         public string Answer { get; set; }
 
         public bool IsBestAnswer { get; set; }
+
+        public int Likes { get; set; }
+
+        public int Dislikes { get; set; }
 
         public DateTime DateCreated { get; set; }
     }

@@ -6,8 +6,8 @@ export class Question {
   categoryId: number;
 
   constructor(args) {
-    this.id = +(args.id? args.id:0);
-    this.userId = +(args.userId ? args.userId : localStorage['userId']);
+    this.id = +(args.id || 0);
+    this.userId = +(args.userId || localStorage['userId']);
     this.question = args.question;
     this.description = args.description;
     this.categoryId = +args.categoryId;

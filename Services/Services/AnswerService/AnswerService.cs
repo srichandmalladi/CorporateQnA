@@ -1,19 +1,17 @@
 ﻿using AutoMapper;
 using System.Collections.Generic;
-using System.Linq;
-
-using CoreModels.View;
-using CoreModels;
-using CoreModels.Enums;
 using System;
 
-namespace Services.Services
+using CorporateQnA.Model.View;
+using CorporateQnA.Model;
+using DataModel = CorporateQnA.Data;
+
+namespace CorporateQnA.Services
 {
     public class AnswerService : IAnswerService
     {
-
         private PetaPoco.Database Database;
-        IMapper Mapper;
+        private IMapper Mapper;
 
         public AnswerService(PetaPoco.Database db,
             IMapper mapper)
@@ -22,30 +20,15 @@ namespace Services.Services
             this.Mapper = mapper;
         }
 
-        public IEnumerable<AnswersActivityView> GetAnswersActivity(int qId)
+        public IEnumerable<AnswerActivityView> GetAnswersActivity(int questionId)
         {
-            var answers = this.Database.Fetch<DataModels.View.AnswersActivityView>("where QueId=@0",qId).ToList();
-            var answerActivity = this.Database.Fetch<AnswersActivity>("select AnsId,Activity,COUNT(Activity) as CountOfActivity from QAActivity where QueId =0 group by AnsId,Activity").ToList();
-            List<AnswersActivityView> result = new List<AnswersActivityView>();
-
-            answers.ForEach(answer =>
-            {
-                var coreAnswer = this.Mapper.Map<AnswersActivityView>(answer);
-
-                AnswersActivity likes = answerActivity.Find(ans => ans.AnsId == answer.Id && ans.Activity == Activity.Like);
-                coreAnswer.Likes = (likes != null) ? likes.CountOfActivity : 0;
-
-                AnswersActivity dislikes = answerActivity.Find(que => que.AnsId == coreAnswer.Id && que.Activity == Activity.Dislike);
-                coreAnswer.Dislikes = (dislikes != null) ? dislikes.CountOfActivity : 0;
-
-                result.Add(coreAnswer);
-            });
-            return result;
+            var answers = this.Database.Fetch<DataModel.View.AnswerActivityView>("where QuestionId=@0",questionId);
+            return this.Mapper.Map<List<AnswerActivityView>>(answers);
         }
 
-        public Int32 AddQuestion(Answers answer)
+        public int AddAnswer(Answers answer)
         {
-            var newAnswer = this.Mapper.Map<DataModels.Answers>(answer);
+            var newAnswer = this.Mapper.Map<DataModel.Answers>(answer);
             return Convert.ToInt32(this.Database.Insert(newAnswer));
         }
     }

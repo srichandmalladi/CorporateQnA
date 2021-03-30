@@ -1,16 +1,16 @@
 ﻿using PetaPoco;
 using System;
 
-namespace DataModels
+namespace CorporateQnA.Data
 {
-    [TableName("Answers")]
+    [TableName("Answer")]
     public class Answers
     {
         public int Id { get; set; }
 
         public int UserId { get; set; }
 
-        public int QueId { get; set; }
+        public int QuestionId { get; set; }
 
         public string Answer { get; set; }
 

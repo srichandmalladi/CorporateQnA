@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-using Services.Services;
-using DataModels.Authentication;
-using CoreModels;
+using CorporateQnA.Data.Authentication;
+using CorporateQnA.Model.View;
+using CorporateQnA.Services;
 
 namespace BookMyShowApi.Controllers
 {
@@ -14,9 +14,8 @@ namespace BookMyShowApi.Controllers
     [ApiController]
     public class UsersController : ControllerBase
     {
-
         private IUserService UserService;
-        public UserManager<User> UserManager;
+        private UserManager<User> UserManager;
 
         public UsersController(UserManager<User> userManager, IUserService userService)
         {
@@ -24,46 +23,51 @@ namespace BookMyShowApi.Controllers
             this.UserService = userService;
         }
 
+        //Route: api/users/register
         [Route("register")]
-        //POST: api/user/register
         public Task<object> Register(UserModel model)
         {
             return this.UserService.Register(model);
         }
 
-        [Route("login")]
         //POST: api/user/login
+        [Route("login")]
         public async Task<IActionResult> Login(LoginModel model)
         {
             var token = await this.UserService.Login(model);
 
-            if (token!=null)
+            if (token != null)
             {
                 return Ok(new { token });
             }
             else
+            {
                 return BadRequest(new { message = "Username or password is incorrect." });
+            }
         }
 
+        //Route: api/users/login
         [Route("userProfile")]
         public async Task<object> GetUserProfile()
         {
-            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            string userId = User.Claims.FirstOrDefault(c => c.Type == "UserID").Value;
             var user = await UserManager.FindByIdAsync(userId);
-            var userData = this.UserService.GetUserProfile(user.UserName);
+            var userData = this.UserService.GetUserData(user.UserName);
             return userData;
         }
 
+        //Route: api/users/all
         [Route("all")]
-        public IEnumerable<UserProfile> GetAllProfiles()
+        public IEnumerable<UserProfileView> GetAllUserProfiles()
         {
-            return this.UserService.GetAllProfiles();
+            return this.UserService.GetAllUserProfiles();
         }
 
+        //Route: api/users/id
         [Route("{id}")]
-        public UserProfile getUserProfileById(int id)
+        public UserProfileView GetUserProfileById(int id)
         {
-            return this.UserService.GetAllProfiles().FirstOrDefault(temp => temp.Id == id);
+            return this.UserService.GetProfileById(id);
         }
     }
 }

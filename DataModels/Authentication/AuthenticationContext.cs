@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace DataModels.Authentication
+namespace CorporateQnA.Data.Authentication
 {
     public class AuthenticationContext:IdentityDbContext<User>
     {

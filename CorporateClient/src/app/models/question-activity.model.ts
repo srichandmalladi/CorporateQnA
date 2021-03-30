@@ -4,7 +4,7 @@ export class QuestionActivity {
   description: string;
   userId: number;
   userName: string;
-  userPicture: string;
+  profilePic: string;
   categoryId: number;
   upVotes: number;
   views: number;
@@ -18,7 +18,7 @@ export class QuestionActivity {
     this.description = args.description;
     this.userId = args.userId;
     this.userName = args.userName;
-    this.userPicture = args.userPicture;
+    this.profilePic = args.profilePic;
     this.categoryId = args.categoryId;
     this.upVotes = args.upVotes;
     this.views = args.views;

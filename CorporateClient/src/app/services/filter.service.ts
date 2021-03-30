@@ -15,10 +15,10 @@ export class FilterService {
   constructor(private http: HttpClient) { }
 
   getAllCategories() {
-    return this.http.get<Category[]>(this.baseURL + "categories/all");
+    return this.http.get<Category[]>(this.baseURL + "category/all");
   }
 
   addQuestion(question: Question) {
-    return this.http.post(this.baseURL + "questions/add", question);
+    return this.http.post(this.baseURL + "question/add", question);
   }
 }

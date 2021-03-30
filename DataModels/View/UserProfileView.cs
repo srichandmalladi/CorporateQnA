@@ -1,7 +1,6 @@
-﻿
-namespace CoreModels
+﻿namespace CorporateQnA.Data.View
 {
-    public class UserProfile
+    public class UserProfileView
     {
         public int Id { get; set; }
 

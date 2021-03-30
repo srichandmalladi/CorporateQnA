@@ -59,7 +59,7 @@ export class AnswersComponent {
     if (this.answerForm.valid) {
       var newAnswer = new Answer('');
       newAnswer.answer = this.answerForm.value.answer;
-      newAnswer.queId = this.displayQuestion.id;
+      newAnswer.questionId = this.displayQuestion.id;
       this.answerService.addAnswer(newAnswer).subscribe(
         data => {
           if (data != 0) {
@@ -80,11 +80,11 @@ export class AnswersComponent {
     }
   }
 
-  likeAnswer(ansId: number) {
+  likeAnswer(answerId: number) {
     var activity = new QAActivity('');
-    activity.ansId = ansId;
+    activity.answerId = answerId;
     activity.userId = +localStorage['userId'];
-    activity.activity = Activity.like;
+    activity.activityType = Activity.like;
     this.activityService.likeOrDislike(activity).subscribe(
       data => {
         if (data!=0) {
@@ -97,11 +97,11 @@ export class AnswersComponent {
     );
   }
 
-  dislikeAnswer(ansId: number) {
+  dislikeAnswer(answerId: number) {
     var activity = new QAActivity('');
-    activity.ansId = ansId;
+    activity.answerId = answerId;
     activity.userId = +localStorage['userId'];
-    activity.activity = Activity.dislike;
+    activity.activityType = Activity.dislike;
     this.activityService.likeOrDislike(activity).subscribe(
       data => {
         if (data!=0) {
@@ -115,7 +115,7 @@ export class AnswersComponent {
   }
 
   changeBestAnswer(id: number) {
-    this.activityService.changeBestAnswer(id).subscribe(() =>
+    this.activityService.updateBestAnswer(id).subscribe(() =>
       this.loadAnswers());
   }
 }

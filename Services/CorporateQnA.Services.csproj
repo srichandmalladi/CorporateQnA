@@ -15,8 +15,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreModels\CoreModels.csproj" />
-    <ProjectReference Include="..\DataModels\DataModels.csproj" />
+    <ProjectReference Include="..\CoreModels\CorporateQnA.Model.csproj" />
+    <ProjectReference Include="..\DataModels\CorporateQnA.Data.csproj" />
   </ItemGroup>
 
 </Project>

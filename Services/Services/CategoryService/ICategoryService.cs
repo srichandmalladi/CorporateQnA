@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
 
-using CoreModels;
-using CoreModels.View;
+using CorporateQnA.Model;
+using CorporateQnA.Model.View;
 
-namespace Services.Services
+namespace CorporateQnA.Services
 {
     public interface ICategoryService
     {
-        IEnumerable<Categories> GetAllCategories();
+        IEnumerable<Category> GetAllCategories();
 
-        int AddCategory(Categories category);
+        int AddCategory(Category category);
 
         IEnumerable<CategoryActivityView> GetCategoryActivity();
     }

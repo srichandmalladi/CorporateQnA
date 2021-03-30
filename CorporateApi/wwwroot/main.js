@@ -223,8 +223,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Question", function() { return Question; });
 class Question {
     constructor(args) {
-        this.id = +(args.id ? args.id : 0);
-        this.userId = +(args.userId ? args.userId : localStorage['userId']);
+        this.id = +(args.id || 0);
+        this.userId = +(args.userId || localStorage['userId']);
         this.question = args.question;
         this.description = args.description;
         this.categoryId = +args.categoryId;
@@ -254,16 +254,16 @@ class ActivityService {
         this.baseURL = "/api/activity/";
     }
     addView(activity) {
-        return this.http.post(this.baseURL + "view", activity);
+        return this.http.post(this.baseURL + "view/add", activity);
     }
     addUpVote(activity) {
-        return this.http.post(this.baseURL + "upvote", activity);
+        return this.http.post(this.baseURL + "upvote/add", activity);
     }
     likeOrDislike(activity) {
-        return this.http.post(this.baseURL + "likeOrDislike", activity);
+        return this.http.post(this.baseURL + "likeOrDislike/add", activity);
     }
-    changeBestAnswer(id) {
-        return this.http.get(this.baseURL + "changeBestAnswer/" + id);
+    updateBestAnswer(id) {
+        return this.http.get(this.baseURL + "updateBestAnswer/" + id);
     }
 }
 ActivityService.ɵfac = function ActivityService_Factory(t) { return new (t || ActivityService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
@@ -325,9 +325,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Answer", function() { return Answer; });
 class Answer {
     constructor(args) {
-        this.id = +(args.id ? args.id : 0);
-        this.userId = +(args.userId ? args.userId : localStorage['userId']);
-        this.queId = +args.queId;
+        this.id = +(args.id || 0);
+        this.userId = +(args.userId || localStorage['userId']);
+        this.questionId = +args.questionId;
         this.answer = args.answer;
         this.dateCreated = args.dateCreated;
         this.isBestAnswer = args.isBestAnswer;
@@ -450,7 +450,7 @@ function HomeComponent_div_4_Template(rf, ctx) { if (rf & 1) {
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](1);
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵproperty"]("ngClass", _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpureFunction1"](12, _c1, question_r13.isSolved));
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](2);
-    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpropertyInterpolate"]("src", question_r13.userPicture, _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵsanitizeUrl"]);
+    _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵpropertyInterpolate"]("src", question_r13.profilePic, _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵsanitizeUrl"]);
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](2);
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵtextInterpolate1"]("", question_r13.question, "? ");
     _angular_core__WEBPACK_IMPORTED_MODULE_2__["ɵɵadvance"](5);
@@ -531,35 +531,35 @@ class HomeComponent {
         this.questionsToDisplay = event;
         this.getQuestions();
     }
-    questionSelected(qId) {
+    questionSelected(questionId) {
         this.isQuestionSelected = true;
-        if (this.selectedQuestion == null || this.selectedQuestion.id != qId) {
-            this.addViewCount(qId);
+        if (this.selectedQuestion == null || this.selectedQuestion.id != questionId) {
+            this.addViewCount(questionId);
         }
-        this.selectedQuestion = this.questions.find(data => data.id == qId);
+        this.selectedQuestion = this.questions.find(data => data.id == questionId);
     }
-    addViewCount(qId) {
+    addViewCount(questionId) {
         var activity = new _models_qa_activity_model__WEBPACK_IMPORTED_MODULE_1__["QAActivity"]('');
-        activity.queId = qId;
+        activity.questionId = questionId;
         activity.userId = +localStorage['userId'];
-        activity.activity = _models_activity_enum__WEBPACK_IMPORTED_MODULE_0__["Activity"].view;
+        activity.activityType = _models_activity_enum__WEBPACK_IMPORTED_MODULE_0__["Activity"].view;
         this.activityService.addView(activity).subscribe(data => {
             if (data != 0) {
-                this.questions.find(temp => temp.id == qId).views += 1;
+                this.questions.find(temp => temp.id == questionId).views += 1;
             }
         }, err => {
             console.log(err);
         });
     }
-    upvote(qId, event) {
+    upvote(questionId, event) {
         event.stopPropagation();
         var activity = new _models_qa_activity_model__WEBPACK_IMPORTED_MODULE_1__["QAActivity"]('');
-        activity.queId = qId;
+        activity.questionId = questionId;
         activity.userId = +localStorage['userId'];
-        activity.activity = _models_activity_enum__WEBPACK_IMPORTED_MODULE_0__["Activity"].upVote;
+        activity.activityType = _models_activity_enum__WEBPACK_IMPORTED_MODULE_0__["Activity"].upVote;
         this.activityService.addUpVote(activity).subscribe(data => {
             if (data != 0) {
-                this.questions.find(temp => temp.id == qId).upVotes += 1;
+                this.questions.find(temp => temp.id == questionId).upVotes += 1;
             }
         }, err => {
             console.log(err);
@@ -725,10 +725,10 @@ class FilterService {
         this.baseURL = "/api/";
     }
     getAllCategories() {
-        return this.http.get(this.baseURL + "categories/all");
+        return this.http.get(this.baseURL + "category/all");
     }
     addQuestion(question) {
-        return this.http.post(this.baseURL + "questions/add", question);
+        return this.http.post(this.baseURL + "question/add", question);
     }
 }
 FilterService.ɵfac = function FilterService_Factory(t) { return new (t || FilterService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
@@ -2049,13 +2049,13 @@ __webpack_require__.r(__webpack_exports__);
 class QuestionService {
     constructor(route) {
         this.route = route;
-        this.baseURL = "/api/questions/";
+        this.baseURL = "/api/question/";
     }
     getQuestionsActivity() {
-        return this.route.get(this.baseURL + "getQuestionsActivity");
+        return this.route.get(this.baseURL + "activities");
     }
     getQuestionsAnswered(id) {
-        return this.route.get(this.baseURL + "getQuestionsAnswered/" + id);
+        return this.route.get(this.baseURL + "getAnsweredQuestions/" + id);
     }
 }
 QuestionService.ɵfac = function QuestionService_Factory(t) { return new (t || QuestionService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
@@ -2121,7 +2121,7 @@ class UserCardsComponent {
     }
 }
 UserCardsComponent.ɵfac = function UserCardsComponent_Factory(t) { return new (t || UserCardsComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"])); };
-UserCardsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: UserCardsComponent, selectors: [["app-user-cards"]], decls: 10, vars: 2, consts: [[1, "border", "px-3", "py-2", "m-0"], [1, "form-group", 3, "formGroup"], [1, "form-control", "border", "col-md-3", "d-flex", "p-0", "mw-100"], ["aria-hidden", "true", 1, "fa", "fa-search", "my-auto", "pl-2"], ["type", "text", "placeholder", "Search", "formControlName", "searchUser", 1, "form-control", "border-0", "w-100", "h-75", "my-auto", 3, "keyup"], [1, "d-flex", "flex-wrap"], [3, "user", "click", 4, "ngFor", "ngForOf"], [3, "user", "click"]], template: function UserCardsComponent_Template(rf, ctx) { if (rf & 1) {
+UserCardsComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdefineComponent"]({ type: UserCardsComponent, selectors: [["app-user-cards"]], decls: 10, vars: 2, consts: [[1, "border", "px-3", "py-2", "m-0"], [1, "form-group", 3, "formGroup"], [1, "form-control", "border", "col-md-3", "d-flex", "p-0"], ["aria-hidden", "true", 1, "fa", "fa-search", "my-auto", "pl-2"], ["type", "text", "placeholder", "Search", "formControlName", "searchUser", 1, "form-control", "border-0", "w-100", "h-75", "my-auto", 3, "keyup"], [1, "d-flex", "flex-wrap"], [3, "user", "click", 4, "ngFor", "ngForOf"], [3, "user", "click"]], template: function UserCardsComponent_Template(rf, ctx) { if (rf & 1) {
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](0, "form", 0);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](1, "div", 1);
         _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵelementStart"](2, "label");
@@ -2283,13 +2283,13 @@ __webpack_require__.r(__webpack_exports__);
 class CategoryService {
     constructor(route) {
         this.route = route;
-        this.baseURL = "/api/categories/";
+        this.baseURL = "/api/category/";
     }
     addCategory(category) {
         return this.route.post(this.baseURL + "add", category);
     }
     getCategoriesActivity() {
-        return this.route.get(this.baseURL + "getCategoryActivity");
+        return this.route.get(this.baseURL + "activities");
     }
 }
 CategoryService.ɵfac = function CategoryService_Factory(t) { return new (t || CategoryService)(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"](_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"])); };
@@ -2315,10 +2315,10 @@ __webpack_require__.r(__webpack_exports__);
 class AnswerService {
     constructor(route) {
         this.route = route;
-        this.baseURL = "/api/answers/";
+        this.baseURL = "/api/answer/";
     }
-    getAnswersActivity(qId) {
-        return this.route.get(this.baseURL + "getAnswersActivity/" + qId);
+    getAnswersActivity(questionId) {
+        return this.route.get(this.baseURL + "activities/" + questionId);
     }
     addAnswer(answer) {
         return this.route.post(this.baseURL + "add", answer);
@@ -2420,11 +2420,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QAActivity", function() { return QAActivity; });
 class QAActivity {
     constructor(args) {
-        this.queId = args.queId ? args.queId : 0;
-        this.ansId = args.ansId ? args.ansId : 0;
+        this.questionId = args.questionId || 0;
+        this.answerId = args.answerId || 0;
         this.userId = args.userId;
-        this.activity = args.activity;
-        this.activityTime = args.activity;
+        this.activityType = args.activityType;
+        this.dateCreated = args.dateCreated;
     }
 }
 
@@ -2696,7 +2696,7 @@ class AnswersComponent {
         if (this.answerForm.valid) {
             var newAnswer = new _models_answer_model__WEBPACK_IMPORTED_MODULE_3__["Answer"]('');
             newAnswer.answer = this.answerForm.value.answer;
-            newAnswer.queId = this.displayQuestion.id;
+            newAnswer.questionId = this.displayQuestion.id;
             this.answerService.addAnswer(newAnswer).subscribe(data => {
                 if (data != 0) {
                     this.toastr.success("answer Added");
@@ -2713,11 +2713,11 @@ class AnswersComponent {
             });
         }
     }
-    likeAnswer(ansId) {
+    likeAnswer(answerId) {
         var activity = new _models_qa_activity_model__WEBPACK_IMPORTED_MODULE_4__["QAActivity"]('');
-        activity.ansId = ansId;
+        activity.answerId = answerId;
         activity.userId = +localStorage['userId'];
-        activity.activity = _models_activity_enum__WEBPACK_IMPORTED_MODULE_2__["Activity"].like;
+        activity.activityType = _models_activity_enum__WEBPACK_IMPORTED_MODULE_2__["Activity"].like;
         this.activityService.likeOrDislike(activity).subscribe(data => {
             if (data != 0) {
                 this.loadAnswers();
@@ -2726,11 +2726,11 @@ class AnswersComponent {
             console.log(err);
         });
     }
-    dislikeAnswer(ansId) {
+    dislikeAnswer(answerId) {
         var activity = new _models_qa_activity_model__WEBPACK_IMPORTED_MODULE_4__["QAActivity"]('');
-        activity.ansId = ansId;
+        activity.answerId = answerId;
         activity.userId = +localStorage['userId'];
-        activity.activity = _models_activity_enum__WEBPACK_IMPORTED_MODULE_2__["Activity"].dislike;
+        activity.activityType = _models_activity_enum__WEBPACK_IMPORTED_MODULE_2__["Activity"].dislike;
         this.activityService.likeOrDislike(activity).subscribe(data => {
             if (data != 0) {
                 this.loadAnswers();
@@ -2740,7 +2740,7 @@ class AnswersComponent {
         });
     }
     changeBestAnswer(id) {
-        this.activityService.changeBestAnswer(id).subscribe(() => this.loadAnswers());
+        this.activityService.updateBestAnswer(id).subscribe(() => this.loadAnswers());
     }
 }
 AnswersComponent.ɵfac = function AnswersComponent_Factory(t) { return new (t || AnswersComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_services_answer_service__WEBPACK_IMPORTED_MODULE_6__["AnswerService"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](_services_activity_service__WEBPACK_IMPORTED_MODULE_7__["ActivityService"]), _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_8__["ToastrService"])); };
@@ -2796,7 +2796,7 @@ AnswersComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵdefineC
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵelementEnd"]();
     } if (rf & 2) {
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](4);
-        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵpropertyInterpolate"]("src", ctx.displayQuestion.userPicture, _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵsanitizeUrl"]);
+        _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵpropertyInterpolate"]("src", ctx.displayQuestion.profilePic, _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵsanitizeUrl"]);
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵtextInterpolate"](ctx.displayQuestion.userName);
         _angular_core__WEBPACK_IMPORTED_MODULE_5__["ɵɵadvance"](2);

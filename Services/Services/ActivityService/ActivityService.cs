@@ -1,15 +1,15 @@
 ﻿using AutoMapper;
-
-using CoreModels;
 using System;
 
-namespace Services.Services
+using DataModel = CorporateQnA.Data;
+using CorporateQnA.Model;
+
+namespace CorporateQnA.Services
 {
     public class ActivityService : IActivityService
     {
-
         private PetaPoco.Database DataBase;
-        public IMapper Mapper;
+        private IMapper Mapper;
 
         public ActivityService(PetaPoco.Database database,
             IMapper mapper)
@@ -18,39 +18,36 @@ namespace Services.Services
             this.Mapper = mapper;
         }
 
-        public Int32 AddView(QAActivity activity)
+        public int AddView(QAActivity activity)
         {
-            var newActivity = this.Mapper.Map<DataModels.QAActivity>(activity);
+            var newActivity = this.Mapper.Map<DataModel.QAActivity>(activity);
             return Convert.ToInt32(this.DataBase.Insert(newActivity));
         }
 
-        public Int32 AddUpVote(QAActivity activity)
+        public int AddUpVote(QAActivity activity)
         {
-            var newActivity = this.Mapper.Map<DataModels.QAActivity>(activity);
-            var data=this.DataBase.SingleOrDefault<DataModels.QAActivity>("where QueId=@0 and UserId=@1 and Activity=@2",newActivity.QueId,newActivity.UserId,newActivity.Activity);
+            var newActivity = this.Mapper.Map<DataModel.QAActivity>(activity);
+            var data=this.DataBase.SingleOrDefault<DataModel.QAActivity>("where QuestionId=@0 and UserId=@1 and ActivityType=@2",newActivity.QuestionId,newActivity.UserId,newActivity.ActivityType);
 
             if (data == null)
             {
                 return Convert.ToInt32(this.DataBase.Insert(newActivity));
             }
-            else
-            {
-                return Convert.ToInt32(null);
-            }
+            return 0;
         }
 
-        public Int32 LikeOrDislike(QAActivity activity)
+        public int AddLikeOrDislike(QAActivity activity)
         {
-            var newActivity = this.Mapper.Map<DataModels.QAActivity>(activity);
-            var data=this.DataBase.SingleOrDefault<DataModels.QAActivity>("where AnsId =@0 and UserId =@1",newActivity.AnsId,newActivity.UserId);
+            var newActivity = this.Mapper.Map<DataModel.QAActivity>(activity);
+            var data=this.DataBase.SingleOrDefault<DataModel.QAActivity>("where AnswerId =@0 and UserId =@1",newActivity.AnswerId,newActivity.UserId);
 
             if (data == null)
             {
                 return Convert.ToInt32(this.DataBase.Insert(newActivity));
             }
-            else if(data.Activity==newActivity.Activity)
+            else if(data.ActivityType==newActivity.ActivityType)
             {
-                return Convert.ToInt32(null);
+                return 0;
             }
             else
             {
@@ -59,23 +56,23 @@ namespace Services.Services
             }
         }
 
-        public Int32 ChangeBestAnswer(int AnsId)
+        public int UpdateBestAnswer(int answerId)
         {
-            var queId = this.DataBase.SingleOrDefault<int>("select QueId from Answers where Id=@0", AnsId);
-            var ansId = this.DataBase.SingleOrDefault<int>("select Id from Answers where QueId=@0 and IsBestAnswer=1", queId);
+            var questionId = this.DataBase.SingleOrDefault<int>("select QuestionId from Answer where Id=@0", answerId);
+            var existingAnswer = this.DataBase.SingleOrDefault<DataModel.Answers>("where QuestionId=@0 and IsBestAnswer=1", questionId);
 
-            if (ansId==0)
+            if (existingAnswer==null)
             {
-                return Convert.ToInt32(this.DataBase.Execute("UPDATE Answers SET IsBestAnswer = 1 WHERE Id = @0", AnsId)); 
+                return Convert.ToInt32(this.DataBase.Execute("UPDATE Answer SET IsBestAnswer = 1 WHERE Id = @0", answerId)); 
             }
-            else if (ansId == AnsId)
+            else if (existingAnswer.Id == answerId)
             {
-                return Convert.ToInt32(this.DataBase.Execute("UPDATE Answers SET IsBestAnswer = 0 WHERE Id = @0", AnsId));
+                return Convert.ToInt32(this.DataBase.Execute("UPDATE Answer SET IsBestAnswer = 0 WHERE Id = @0", answerId));
             }
             else
             {
-                this.DataBase.Execute("UPDATE Answers SET IsBestAnswer = 1 WHERE Id = @0", AnsId);
-                return Convert.ToInt32(this.DataBase.Execute("UPDATE Answers SET IsBestAnswer = 0 WHERE Id = @0", ansId));
+                this.DataBase.Execute("UPDATE Answer SET IsBestAnswer = 1 WHERE Id = @0", answerId);
+                return Convert.ToInt32(this.DataBase.Execute("UPDATE Answer SET IsBestAnswer = 0 WHERE Id = @0", existingAnswer.Id));
             }
         }
     }

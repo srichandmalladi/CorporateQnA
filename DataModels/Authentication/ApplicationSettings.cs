@@ -1,4 +1,4 @@
-﻿namespace DataModels.Authentication
+﻿namespace CorporateQnA.Data.Authentication
 {
     public class ApplicationSettings
     {

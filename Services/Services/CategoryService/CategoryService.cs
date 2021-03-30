@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using AutoMapper;
 
-using CoreModels;
-using CoreModels.View;
+using CorporateQnA.Model;
+using CorporateQnA.Model.View;
+using DataModel = CorporateQnA.Data;
 
-namespace Services.Services
+namespace CorporateQnA.Services
 {
     public class CategoryService:ICategoryService
     {
-
         private PetaPoco.Database Database;
         private IMapper Mapper;
 
@@ -20,39 +20,23 @@ namespace Services.Services
             this.Mapper = mapper;
         }
 
-        public IEnumerable<Categories> GetAllCategories()
+        public IEnumerable<Category> GetAllCategories()
         {
-            var categories = this.Database.Fetch<DataModels.Categories>(string.Empty);
-            return this.Mapper.Map<List<Categories>>(categories);
+            var categories = this.Database.Fetch<DataModel.Category>(string.Empty);
+            return this.Mapper.Map<List<Category>>(categories);
         }
 
-        public Int32 AddCategory(Categories category)
+        public int AddCategory(Category category)
         {
-            var newCategory = this.Mapper.Map<DataModels.Categories>(category);
+            var newCategory = this.Mapper.Map<DataModel.Category>(category);
             return Convert.ToInt32(this.Database.Insert(newCategory));
         }
 
         public IEnumerable<CategoryActivityView> GetCategoryActivity()
         {
-            var result = new List<CategoryActivityView>();
-            var categories =(List<Categories>)this.GetAllCategories();
+            var categories = this.Database.Fetch<DataModel.View.CategoryActivityView>(string.Empty);
 
-            categories.ForEach(temp =>
-            {
-                var category = new CategoryActivityView();
-                category.Id = temp.Id;
-                category.Name = temp.Name;
-                category.Description = temp.Description;
-                category.TotalQuestions = this.Database.SingleOrDefault<int>("select COUNT(Id) from CategoryActivityView where Id=@0",category.Id);
-
-                category.TaggedThisWeek = this.Database.SingleOrDefault<int>("select COUNT(Id) from CategoryActivityView WHERE DateCreated > " +
-                                                                             "(select DATEADD(Day, 2 - DATEPART(WEEKDAY, GETDATE()), CAST(GETDATE() AS DATE)))");
-
-                category.TaggedThisMonth= this.Database.SingleOrDefault<int>("select COUNT(Id) from CategoryActivityView WHERE DateCreated > " +
-                                                                             "(SELECT DATEADD(month, DATEDIFF(month, 0, GETDATE()), 0))");
-                result.Add(category);
-            });
-            return result;
+            return this.Mapper.Map<List<CategoryActivityView>>(categories);
         }
     }
 }

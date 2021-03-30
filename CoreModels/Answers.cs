@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CoreModels
+namespace CorporateQnA.Model
 {
     public class Answers
     {
@@ -8,7 +8,7 @@ namespace CoreModels
 
         public int UserId { get; set; }
 
-        public int QueId { get; set; }
+        public int QuestionId { get; set; }
 
         public string Answer { get; set; }
 
