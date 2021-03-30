@@ -23,7 +23,10 @@ namespace CorporateQnA.Services
         private IMapper Mapper;
         private PetaPoco.Database DataBase;
 
-        public UserService(UserManager<User> userManager, IOptions<ApplicationSettings> appSettings,IMapper mapper, PetaPoco.Database db)
+        public UserService(UserManager<User> userManager,
+            IOptions<ApplicationSettings> appSettings,
+            IMapper mapper,
+            PetaPoco.Database db)
         {
             this.UserManager = userManager;
             this.AppSettings = appSettings.Value;

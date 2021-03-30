@@ -8,8 +8,8 @@ export class QAActivity {
   dateCreated: Date;
 
   constructor(args) {
-    this.questionId = args.questionId || 0;
-    this.answerId = args.answerId || 0;
+    this.questionId = +args.questionId || 0;
+    this.answerId = +args.answerId || 0;
     this.userId = args.userId;
     this.activityType = args.activityType;
     this.dateCreated = args.dateCreated;

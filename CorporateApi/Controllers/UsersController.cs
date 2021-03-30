@@ -17,7 +17,8 @@ namespace BookMyShowApi.Controllers
         private IUserService UserService;
         private UserManager<User> UserManager;
 
-        public UsersController(UserManager<User> userManager, IUserService userService)
+        public UsersController(UserManager<User> userManager,
+            IUserService userService)
         {
             this.UserManager = userManager;
             this.UserService = userService;
@@ -46,7 +47,7 @@ namespace BookMyShowApi.Controllers
             }
         }
 
-        //Route: api/users/login
+        //Route: api/users/userProfile
         [Route("userProfile")]
         public async Task<object> GetUserProfile()
         {

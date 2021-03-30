@@ -2420,8 +2420,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QAActivity", function() { return QAActivity; });
 class QAActivity {
     constructor(args) {
-        this.questionId = args.questionId || 0;
-        this.answerId = args.answerId || 0;
+        this.questionId = +args.questionId || 0;
+        this.answerId = +args.answerId || 0;
         this.userId = args.userId;
         this.activityType = args.activityType;
         this.dateCreated = args.dateCreated;
