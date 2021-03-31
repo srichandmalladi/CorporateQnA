@@ -1,23 +1,22 @@
-﻿using PetaPoco;
+﻿using CorporateQnA.Model;
+using PetaPoco;
 using System;
 
-using CoreModels.Enums;
-
-namespace DataModels
+namespace CorporateQnA.Data
 {
     [TableName("QAActivity")]
     public class QAActivity
     {
         public int Id { get; set; }
 
-        public int QueId { get; set; }
+        public int QuestionId { get; set; }
 
-        public int AnsId { get; set; }
+        public int AnswerId { get; set; }
 
         public int UserId { get; set; }
 
-        public Activity Activity { get; set; }
+        public Activity ActivityType { get; set; }
 
-        public DateTime ActivityTime { get; set; }
+        public DateTime DateCreated { get; set; }
     }
 }

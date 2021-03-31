@@ -10,10 +10,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using SimpleInjector;
-
-using DataModels.Authentication;
-using Services.Services;
 using AutoMapper;
+
+using CorporateQnA.Data.Authentication;
+using CorporateQnA.Services;
 
 namespace CorporateApi
 {
@@ -28,11 +28,11 @@ namespace CorporateApi
             container.Options.ResolveUnregisteredConcreteTypes = false;
             Configuration = configuration;
         }
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
 
-            //services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             var mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new AutoMapperProfile());
@@ -128,8 +128,8 @@ namespace CorporateApi
 
             app.UseStaticFiles();
             
-
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

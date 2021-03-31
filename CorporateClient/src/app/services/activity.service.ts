@@ -14,18 +14,18 @@ export class ActivityService {
   constructor(private http: HttpClient) { }
 
   addView(activity: QAActivity) {
-    return this.http.post(this.baseURL + "view", activity);
+    return this.http.post(this.baseURL + "view/add", activity);
   }
 
   addUpVote(activity: QAActivity) {
-    return this.http.post(this.baseURL + "upvote", activity);
+    return this.http.post(this.baseURL + "upvote/add", activity);
   }
 
   likeOrDislike(activity: QAActivity) {
-    return this.http.post(this.baseURL + "likeOrDislike", activity);
+    return this.http.post(this.baseURL + "likeOrDislike/add", activity);
   }
 
-  changeBestAnswer(id: number) {
-    return this.http.get(this.baseURL + "changeBestAnswer/" + id);
+  updateBestAnswer(id: number) {
+    return this.http.get(this.baseURL + "updateBestAnswer/" + id);
   }
 }

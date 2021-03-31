@@ -1,6 +1,6 @@
-﻿namespace CoreModels
+﻿namespace CorporateQnA.Model
 {
-    public class Categories
+    public class Category
     {
         public int Id { get; set; }
 

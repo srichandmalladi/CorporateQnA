@@ -1,23 +1,26 @@
 ﻿using AutoMapper;
 
-using CoreModels;
-using CoreModels.View;
-using DataModels.Authentication;
+using CorporateQnA.Data.Authentication;
+using CorporateQnA.Model;
+using CorporateQnA.Model.View;
+using DataModel = CorporateQnA.Data;
 
-namespace Services.Services
+namespace CorporateQnA.Services
 {
     public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
-            CreateMap<UserModel, DataModels.Users>().ReverseMap();
-            CreateMap<Questions, DataModels.Questions>().ReverseMap();
-            CreateMap<Categories, DataModels.Categories>().ReverseMap();
-            CreateMap<QuestionActivityView, DataModels.View.QuestionActivityView>().ReverseMap();
-            CreateMap<AnswersActivityView, DataModels.View.AnswersActivityView>().ReverseMap();
-            CreateMap<Answers, DataModels.Answers>().ReverseMap();
-            CreateMap<QAActivity, DataModels.QAActivity>().ReverseMap();
-            CreateMap<UserProfile, DataModels.Users>().ReverseMap();
+            CreateMap<UserModel, DataModel.Users>().ReverseMap();
+            CreateMap<Questions, DataModel.Questions>().ReverseMap();
+            CreateMap<Category, DataModel.Category>().ReverseMap();
+            CreateMap<Answers, DataModel.Answers>().ReverseMap();
+            CreateMap<QAActivity, DataModel.QAActivity>().ReverseMap();
+            CreateMap<UserProfileView, DataModel.Users>().ReverseMap();
+            CreateMap<QuestionActivityView, DataModel.View.QuestionActivityView>().ReverseMap();
+            CreateMap<AnswerActivityView, DataModel.View.AnswerActivityView>().ReverseMap();
+            CreateMap<CategoryActivityView, DataModel.View.CategoryActivityView>().ReverseMap();
+            CreateMap<UserProfileView, DataModel.View.UserProfileView>().ReverseMap();
         }
     }
 }

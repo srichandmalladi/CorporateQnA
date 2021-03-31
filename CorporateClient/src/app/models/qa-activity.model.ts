@@ -1,17 +1,17 @@
 import { Activity } from './activity.enum';
 
 export class QAActivity {
-  queId: number;
-  ansId: number;
+  questionId: number;
+  answerId: number;
   userId: number;
-  activity: Activity;
-  activityTime: Date;
+  activityType: Activity;
+  dateCreated: Date;
 
   constructor(args) {
-    this.queId = args.queId ? args.queId:0;
-    this.ansId = args.ansId ? args.ansId:0;
+    this.questionId = +args.questionId || 0;
+    this.answerId = +args.answerId || 0;
     this.userId = args.userId;
-    this.activity = args.activity;
-    this.activityTime = args.activity;
+    this.activityType = args.activityType;
+    this.dateCreated = args.dateCreated;
   }
 }

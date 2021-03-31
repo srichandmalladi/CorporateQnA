@@ -1,9 +1,9 @@
 ﻿using PetaPoco;
 
-namespace DataModels
+namespace CorporateQnA.Data
 {
-    [TableName("Categories")]
-    public class Categories
+    [TableName("Category")]
+    public class Category
     {
         public int Id { get; set; }
 

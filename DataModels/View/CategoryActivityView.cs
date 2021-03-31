@@ -1,4 +1,4 @@
-﻿namespace CorporateQnA.Model.View
+﻿namespace CorporateQnA.Data.View
 {
     public class CategoryActivityView
     {

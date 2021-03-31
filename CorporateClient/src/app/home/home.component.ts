@@ -78,23 +78,23 @@ export class HomeComponent implements OnInit {
     this.getQuestions();
   }
 
-  questionSelected(qId: number) {
+  questionSelected(questionId: number) {
     this.isQuestionSelected = true;
-    if (this.selectedQuestion == null || this.selectedQuestion.id != qId) {
-      this.addViewCount(qId);
+    if (this.selectedQuestion == null || this.selectedQuestion.id != questionId) {
+      this.addViewCount(questionId);
     }
-    this.selectedQuestion = this.questions.find(data => data.id == qId);
+    this.selectedQuestion = this.questions.find(data => data.id == questionId);
   }
 
-  addViewCount(qId: number) {
-    var activity = new QAActivity('');
-    activity.queId = qId;
+  addViewCount(questionId: number) {
+    var activity = new QAActivity({});
+    activity.questionId = questionId;
     activity.userId = +localStorage['userId'];
-    activity.activity = Activity.view;
+    activity.activityType = Activity.view;
     this.activityService.addView(activity).subscribe(
       data => {
         if (data!=0) {
-          this.questions.find(temp => temp.id == qId).views += 1;
+          this.questions.find(temp => temp.id == questionId).views += 1;
         }
       },
       err => {
@@ -103,16 +103,16 @@ export class HomeComponent implements OnInit {
     );
   }
 
-  upvote(qId: number, event: Event) {
+  upvote(questionId: number, event: Event) {
     event.stopPropagation();  
-    var activity = new QAActivity('');
-    activity.queId = qId;
+    var activity = new QAActivity({});
+    activity.questionId = questionId;
     activity.userId = +localStorage['userId'];
-    activity.activity = Activity.upVote;
+    activity.activityType = Activity.upVote;
     this.activityService.addUpVote(activity).subscribe(
       data => {
         if (data!=0) {
-          this.questions.find(temp => temp.id == qId).upVotes += 1;
+          this.questions.find(temp => temp.id == questionId).upVotes += 1;
         }
       },
       err => {

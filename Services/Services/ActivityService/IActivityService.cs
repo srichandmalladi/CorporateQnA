@@ -1,6 +1,6 @@
-﻿using CoreModels;
+﻿using CorporateQnA.Model;
 
-namespace Services.Services
+namespace CorporateQnA.Services
 {
     public interface IActivityService
     {
@@ -8,8 +8,8 @@ namespace Services.Services
 
         int AddUpVote(QAActivity activity);
 
-        int LikeOrDislike(QAActivity activity);
+        int AddLikeOrDislike(QAActivity activity);
 
-        int ChangeBestAnswer(int AnsId);
+        int UpdateBestAnswer(int answerId);
     }
 }

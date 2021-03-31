@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-using Services.Services;
-using CoreModels;
 using System;
+
+using CorporateQnA.Model;
+using CorporateQnA.Services;
 
 namespace CorporateApi.Controllers
 {
@@ -10,7 +10,6 @@ namespace CorporateApi.Controllers
     [ApiController]
     public class ActivityController : ControllerBase
     {
-
         private IActivityService ActivityService;
 
         public ActivityController(IActivityService activityService)
@@ -18,28 +17,32 @@ namespace CorporateApi.Controllers
             this.ActivityService = activityService;
         }
 
-        [Route("view")]
-        public Int32 AddView(QAActivity activity)
+        //Route: api/activity/view/add
+        [Route("view/add")]
+        public int PostView(QAActivity activity)
         {
             return this.ActivityService.AddView(activity);
         }
 
-        [Route("upvote")]
-        public int Upvote(QAActivity activity)
+        //Route: api/activity/upvote/add
+        [Route("upvote/add")]
+        public int PostUpvote(QAActivity activity)
         {
             return this.ActivityService.AddUpVote(activity);
         }
 
-        [Route("likeOrDislike")]
-        public int LikeOrDislike(QAActivity activity)
+        //Route: api/activity/upvote/likeOrDislike/add
+        [Route("likeOrDislike/add")]
+        public int PostLikeOrDislike(QAActivity activity)
         {
-           return this.ActivityService.LikeOrDislike(activity);
+           return this.ActivityService.AddLikeOrDislike(activity);
         }
 
-        [Route("changeBestAnswer/{AnsId}")]
-        public int ChangeBestAnswer(int AnsId)
+        //Route: api/activity/upvote/updateBestAnswer/Id
+        [Route("updateBestAnswer/{answerId}")]
+        public int UpdateBestAnswer(int answerId)
         {
-            return this.ActivityService.ChangeBestAnswer(AnsId);
+            return this.ActivityService.UpdateBestAnswer(answerId);
         }
     }
 }

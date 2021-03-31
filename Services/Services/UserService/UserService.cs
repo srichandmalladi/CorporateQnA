@@ -10,20 +10,23 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-using DataModels.Authentication;
-using CoreModels;
-using CoreModels.Enums;
+using CorporateQnA.Data.Authentication;
+using DataModel = CorporateQnA.Data;
+using CorporateQnA.Model.View;
 
-namespace Services.Services
+namespace CorporateQnA.Services
 {
     public class UserService:IUserService
     {
-        private readonly UserManager<User> UserManager;
-        private readonly ApplicationSettings AppSettings;
-        private readonly IMapper Mapper;
-        private readonly PetaPoco.Database DataBase;
+        private UserManager<User> UserManager;
+        private ApplicationSettings AppSettings;
+        private IMapper Mapper;
+        private PetaPoco.Database DataBase;
 
-        public UserService(UserManager<User> userManager, IOptions<ApplicationSettings> appSettings,IMapper mapper, PetaPoco.Database db)
+        public UserService(UserManager<User> userManager,
+            IOptions<ApplicationSettings> appSettings,
+            IMapper mapper,
+            PetaPoco.Database db)
         {
             this.UserManager = userManager;
             this.AppSettings = appSettings.Value;
@@ -39,7 +42,7 @@ namespace Services.Services
                 UserName = model.UserName,
                 Email = model.Email
             };
-            var user = this.Mapper.Map<DataModels.Users>(model);
+            var user = this.Mapper.Map<DataModel.Users>(model);
             try
             {
                 var result = await UserManager.CreateAsync(newUser, model.Password);
@@ -81,27 +84,20 @@ namespace Services.Services
                 return null;
         }
 
-        public DataModels.Users GetUserProfile(string userName)
+        public DataModel.Users GetUserData(string userName)
         {
-           return this.DataBase.SingleOrDefault<DataModels.Users>("select * from Users where UserName=@0", userName);
+           return this.DataBase.SingleOrDefault<DataModel.Users>("select * from Users where UserName=@0", userName);
         }
 
-        public IEnumerable<UserProfile> GetAllProfiles()
+        public IEnumerable<UserProfileView> GetAllUserProfiles()
         {
-            var usersData = this.DataBase.Fetch<DataModels.Users>(string.Empty).ToList();
-            List <UserProfile> result = new List<UserProfile>();
-
-            usersData.ForEach(temp => {
-                var user = this.Mapper.Map<UserProfile>(temp);
-
-                user.NoOfQuestionsAsked = this.DataBase.SingleOrDefault<int>("select COUNT(Id) from Questions where UserId=@0", temp.Id);
-                user.NoOfQuestionsAnswered = this.DataBase.SingleOrDefault<int>("select COUNT(Id) from Answers where UserId=@0", temp.Id);
-                user.NoOfQuestionsSolved = this.DataBase.SingleOrDefault<int>("select COUNT(Id) from Answers where UserId=@0 and IsBestAnswer=1", temp.Id);
-                user.Likes = this.DataBase.SingleOrDefault<int>("select COUNT(QAActivity.Id) from QAActivity inner join Answers on Answers.Id=QAActivity.AnsId and Answers.UserId=@0 and QAActivity.Activity=@1", temp.Id, Activity.Like);
-                user.Dislikes = this.DataBase.SingleOrDefault<int>("select COUNT(QAActivity.Id) from QAActivity inner join Answers on Answers.Id=QAActivity.AnsId and Answers.UserId=@0 and QAActivity.Activity=@1", temp.Id, Activity.Dislike);
-                result.Add(user);
-            });
-            return result;
+            var usersData = this.DataBase.Fetch<DataModel.View.UserProfileView>("Select * from UserProfileView");
+            return this.Mapper.Map<List<UserProfileView>>(usersData);
+        }
+        public UserProfileView GetProfileById(int id)
+        {
+            var usersData = this.DataBase.SingleOrDefault<DataModel.View.UserProfileView>("Select * from UserProfileView where Id=@0", id);
+            return this.Mapper.Map<UserProfileView>(usersData);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace DataModels.Authentication
+namespace CorporateQnA.Data.Authentication
 {
     public class User:IdentityUser
     {

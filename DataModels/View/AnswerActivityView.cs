@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace CoreModels.View
+namespace CorporateQnA.Data.View
 {
-    public class AnswersActivityView
+    public class AnswerActivityView
     {
         public int Id { get; set; }
 
@@ -11,6 +11,8 @@ namespace CoreModels.View
         public string ProfilePic { get; set; }
 
         public string UserName { get; set; }
+
+        public int QuestionId { get; set; }
 
         public string Answer { get; set; }
 

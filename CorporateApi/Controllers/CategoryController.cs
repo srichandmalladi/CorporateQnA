@@ -1,37 +1,39 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-using Services.Services;
-using CoreModels;
-using CoreModels.View;
+using CorporateQnA.Model;
+using CorporateQnA.Model.View;
+using CorporateQnA.Services;
 
 namespace CorporateApi.Controllers
 {
-    [Route("api/categories")]
+    [Route("api/category")]
     [ApiController]
-    public class CategoriesController : ControllerBase
+    public class CategoryController : ControllerBase
     {
-
         private ICategoryService CategoryService;
 
-        public CategoriesController(ICategoryService categoryService)
+        public CategoryController(ICategoryService categoryService)
         {
             this.CategoryService = categoryService;
         }
 
+        //Route: api/category/all
         [Route("all")]
-        public IEnumerable<Categories> GetAllCategories()
+        public IEnumerable<Category> GetAllCategories()
         {
             return this.CategoryService.GetAllCategories();
         }
 
+        //Route: api/category/add
         [Route("add")]
-        public int AddCategory(Categories category)
+        public int PostCategory(Category category)
         {
             return this.CategoryService.AddCategory(category);
         }
 
-        [Route("getCategoryActivity")]
+        //Route: api/category/activities
+        [Route("activities")]
         public IEnumerable<CategoryActivityView> GetCategoryActivity()
         {
             return this.CategoryService.GetCategoryActivity();

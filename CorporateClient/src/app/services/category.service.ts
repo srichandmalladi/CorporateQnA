@@ -10,7 +10,7 @@ import { Category } from '../models/category.model';
 
 export class CategoryService {
 
-  private baseURL: string = "/api/categories/";
+  private baseURL: string = "/api/category/";
 
   constructor(private route: HttpClient) { }
 
@@ -19,6 +19,6 @@ export class CategoryService {
   }
 
   getCategoriesActivity() {
-    return this.route.get<CategoryActivity[]>(this.baseURL + "getCategoryActivity");
+    return this.route.get<CategoryActivity[]>(this.baseURL + "activities");
   }
 }

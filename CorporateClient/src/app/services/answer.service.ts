@@ -10,12 +10,12 @@ import { AnswersActivity } from '../models/answers-activity.model';
 
 export class AnswerService {
 
-  private baseURL: string = "/api/answers/";
+  private baseURL: string = "/api/answer/";
 
   constructor(private route: HttpClient) { }
 
-  getAnswersActivity(qId: number) {
-    return this.route.get<AnswersActivity[]>(this.baseURL + "getAnswersActivity/" + qId);
+  getAnswersActivity(questionId: number) {
+    return this.route.get<AnswersActivity[]>(this.baseURL + "activities/" + questionId);
   }
 
   addAnswer(answer: Answer) {

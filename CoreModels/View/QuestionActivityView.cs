@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CoreModels.View
+namespace CorporateQnA.Model.View
 {
     public class QuestionActivityView
     {
@@ -14,7 +14,7 @@ namespace CoreModels.View
 
         public string UserName { get; set; }
 
-        public string UserPicture { get; set; }
+        public string ProfilePic { get; set; }
 
         public int CategoryId { get; set; }
 

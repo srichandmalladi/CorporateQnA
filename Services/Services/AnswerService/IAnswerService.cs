@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 
-using CoreModels;
-using CoreModels.View;
+using CorporateQnA.Model;
+using CorporateQnA.Model.View;
 
-namespace Services.Services
+namespace CorporateQnA.Services
 {
     public interface IAnswerService
     {
-        IEnumerable<AnswersActivityView> GetAnswersActivity(int qId);
-        int AddQuestion(Answers answer);
+        IEnumerable<AnswerActivityView> GetAnswersActivity(int questionId);
+
+        int AddAnswer(Answers answer);
     }
 }

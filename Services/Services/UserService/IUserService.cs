@@ -1,20 +1,22 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-using CoreModels;
-using DataModels;
-using DataModels.Authentication;
+using CorporateQnA.Model.View;
+using DataModel = CorporateQnA.Data;
+using CorporateQnA.Data.Authentication;
 
-namespace Services.Services
+namespace CorporateQnA.Services
 {
     public interface IUserService
     {
-        public Task<object> Register(UserModel model);
+        Task<object> Register(UserModel model);
 
-        public Task<string> Login(LoginModel model);
+        Task<string> Login(LoginModel model);
 
-        public Users GetUserProfile(string userName);
+        DataModel.Users GetUserData(string userName);
 
-        public IEnumerable<UserProfile> GetAllProfiles();
+        IEnumerable<UserProfileView> GetAllUserProfiles();
+
+        UserProfileView GetProfileById(int id);
     }
 }
