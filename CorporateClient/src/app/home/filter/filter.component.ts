@@ -56,11 +56,10 @@ export class FilterComponent implements OnInit {
   {
     this.filtersForm = new FormGroup({
       keyword: new FormControl(''),
-      categoryId: new FormControl(''),
-      show: new FormControl(''),
-      days: new FormControl('')
+      categoryId: new FormControl(0),
+      show: new FormControl('all'),
+      days: new FormControl('all')
     });
-    this.setDefaultsForFiltersForm();
 
     this.addQuestionForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
@@ -78,12 +77,6 @@ export class FilterComponent implements OnInit {
       history: true,
       keyboardShortcuts: true
     });
-  }
-
-  setDefaultsForFiltersForm() {
-    this.filtersForm.get('categoryId').patchValue(0);
-    this.filtersForm.get('show').patchValue('all');
-    this.filtersForm.get('days').patchValue('all');
   }
 
   openModal(template: TemplateRef<any>) {
@@ -120,8 +113,10 @@ export class FilterComponent implements OnInit {
   }
 
   resetForm() {
-    this.filtersForm.reset();
-    this.setDefaultsForFiltersForm();
+    this.filtersForm.get('keyword').setValue('');
+    this.filtersForm.get('categoryId').setValue(0);
+    this.filtersForm.get('show').setValue('all');
+    this.filtersForm.get('days').setValue('all');
     this.filterQuestions.emit(this.filtersForm.value);
   }
 }

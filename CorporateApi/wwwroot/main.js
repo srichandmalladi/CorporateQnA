@@ -852,15 +852,11 @@ class CategoriesComponent {
         });
         this.categoryFilter = new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormGroup"]({
             searchText: new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"](''),
-            showFilter: new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"]('')
+            showFilter: new _angular_forms__WEBPACK_IMPORTED_MODULE_0__["FormControl"](0)
         });
-        this.setDefaultsForCategoryFilter();
     }
     ngOnInit() {
         this.getCategoriesActivity();
-    }
-    setDefaultsForCategoryFilter() {
-        this.categoryFilter.get('showFilter').patchValue(0);
     }
     openModal(template) {
         this.modalRef = this.modalService.show(template, this.config);
@@ -895,9 +891,9 @@ class CategoriesComponent {
         this.filteredCategories = this.categories.filter(category => category.name.toLowerCase().match(this.categoryFilter.value['searchText']));
     }
     resetFilters() {
-        this.categoryFilter.reset();
-        this.setDefaultsForCategoryFilter();
-        this.getCategoriesActivity();
+        this.categoryFilter.get('searchText').setValue('');
+        this.categoryFilter.get('showFilter').setValue(0);
+        this.filterCategories();
     }
 }
 CategoriesComponent.ɵfac = function CategoriesComponent_Factory(t) { return new (t || CategoriesComponent)(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](ngx_bootstrap_modal__WEBPACK_IMPORTED_MODULE_2__["BsModalService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](ngx_toastr__WEBPACK_IMPORTED_MODULE_3__["ToastrService"]), _angular_core__WEBPACK_IMPORTED_MODULE_1__["ɵɵdirectiveInject"](_services_category_service__WEBPACK_IMPORTED_MODULE_4__["CategoryService"])); };
@@ -1145,11 +1141,10 @@ class FilterComponent {
         ];
         this.filtersForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
             keyword: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
-            categoryId: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
-            show: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](''),
-            days: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('')
+            categoryId: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"](0),
+            show: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('all'),
+            days: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('all')
         });
-        this.setDefaultsForFiltersForm();
         this.addQuestionForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
             title: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
             description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [_angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required]),
@@ -1163,11 +1158,6 @@ class FilterComponent {
             history: true,
             keyboardShortcuts: true
         });
-    }
-    setDefaultsForFiltersForm() {
-        this.filtersForm.get('categoryId').patchValue(0);
-        this.filtersForm.get('show').patchValue('all');
-        this.filtersForm.get('days').patchValue('all');
     }
     openModal(template) {
         this.modalRef = this.modalService.show(template, this.config);
@@ -1197,8 +1187,10 @@ class FilterComponent {
         this.filterQuestions.emit(this.filtersForm.value);
     }
     resetForm() {
-        this.filtersForm.reset();
-        this.setDefaultsForFiltersForm();
+        this.filtersForm.get('keyword').setValue('');
+        this.filtersForm.get('categoryId').setValue(0);
+        this.filtersForm.get('show').setValue('all');
+        this.filtersForm.get('days').setValue('all');
         this.filterQuestions.emit(this.filtersForm.value);
     }
 }
