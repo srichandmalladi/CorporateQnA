@@ -17,25 +17,32 @@ namespace CorporateApi.Controllers
             this.ActivityService = activityService;
         }
 
-        //Route: api/activity/view/add
-        [Route("view/add")]
-        public int PostView(QAActivity activity)
+        //Route: api/activity/userId/add/view/questionId
+        [Route("{userId}/add/view/{questionId}")]
+        public int PostView(int userId, int questionId)
         {
-            return this.ActivityService.AddView(activity);
+            return this.ActivityService.AddView(userId,questionId);
         }
 
-        //Route: api/activity/upvote/add
-        [Route("upvote/add")]
-        public int PostUpvote(QAActivity activity)
+        //Route: api/activity/userId/add/upvote/questionId
+        [Route("{userId}/add/upvote/{questionId}")]
+        public int PostUpvote(int userId, int questionId)
         {
-            return this.ActivityService.AddUpVote(activity);
+            return this.ActivityService.AddUpVote(userId, questionId);
         }
 
-        //Route: api/activity/upvote/likeOrDislike/add
-        [Route("likeOrDislike/add")]
-        public int PostLikeOrDislike(QAActivity activity)
+        //Route: api/activity/userId/add/like/questionId
+        [Route("{userId}/add/like/{questionId}")]
+        public int PostLike(int userId, int questionId)
         {
-           return this.ActivityService.AddLikeOrDislike(activity);
+           return this.ActivityService.AddLikeOrDislike(userId, questionId, Activity.Like);
+        }
+
+        //Route: api/activity/userId/add/dislike/answerId
+        [Route("{userId}/add/dislike/{answerId}")]
+        public int PostDislike(int userId, int answerId)
+        {
+            return this.ActivityService.AddLikeOrDislike(userId, answerId, Activity.Dislike);
         }
 
         //Route: api/activity/upvote/updateBestAnswer/Id

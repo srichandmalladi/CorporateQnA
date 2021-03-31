@@ -4,11 +4,11 @@ namespace CorporateQnA.Services
 {
     public interface IActivityService
     {
-        int AddView(QAActivity activity);
+        int AddView(int userId, int questionId);
 
-        int AddUpVote(QAActivity activity);
+        int AddUpVote(int userId, int questionId);
 
-        int AddLikeOrDislike(QAActivity activity);
+        int AddLikeOrDislike(int userId, int answerId, Activity activityType);
 
         int UpdateBestAnswer(int answerId);
     }

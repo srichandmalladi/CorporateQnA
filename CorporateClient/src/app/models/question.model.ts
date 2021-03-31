@@ -1,14 +1,14 @@
 export class Question {
   id: number;
   userId: number;
-  question: string;
+  title: string;
   description: string;
   categoryId: number;
 
   constructor(args) {
     this.id = +(args.id || 0);
     this.userId = +(args.userId || localStorage['userId']);
-    this.question = args.question;
+    this.title = args.title;
     this.description = args.description;
     this.categoryId = +args.categoryId;
   }

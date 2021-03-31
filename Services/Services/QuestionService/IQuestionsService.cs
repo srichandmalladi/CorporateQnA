@@ -10,7 +10,7 @@ namespace CorporateQnA.Services
     {
         IEnumerable<QuestionActivityView> GetQuestionsActivity();
 
-        int AddQuestion(Questions question);
+        int AddQuestion(Question question);
 
         IEnumerable<QuestionActivityView> GetUserAnsweredQuestions(int id);
     }

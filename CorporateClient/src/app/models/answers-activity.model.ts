@@ -3,7 +3,7 @@ export class AnswersActivity {
   userId: string;
   profilePic: string;
   userName: string;
-  answer: string;
+  description: string;
   isBestAnswer: boolean;
   likes: number;
   dislikes: number;
@@ -14,7 +14,7 @@ export class AnswersActivity {
     this.userId = args.userId;
     this.profilePic = args.profilePic;
     this.userName = args.userName;
-    this.answer = args.answer;
+    this.description = args.description;
     this.isBestAnswer = args.isBestAnswer;
     this.likes = args.likes;
     this.dislikes = args.dislikes;

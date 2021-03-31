@@ -14,7 +14,7 @@
       </div>
 
     </div>
-    <h6>{{displayQuestion.question}}</h6>
+    <h6>{{displayQuestion.title}}</h6>
     <div [innerHTML]="displayQuestion.description" class="text-secondary text-small font-size-14"></div>
   </div>
   <div class="bg-gray pl-3 py-2 border">
@@ -40,7 +40,7 @@
           </i>
         </div>
       </div>
-      <div [innerHTML]="answer.answer" class="ml-5 font-size-14"></div>
+      <div [innerHTML]="answer.description" class="ml-5 font-size-14"></div>
       <div class="ml-5 d-flex form-group" *ngIf="displayQuestion.userId==loggedUser">
         <input type="checkbox" class="mt-1" [checked]="answer.isBestAnswer" (change)="changeBestAnswer(answer.id)">
         <p class="ml-2 font-size-14"> Mark as Best solution</p>
@@ -54,14 +54,14 @@
         <div class="d-flex justify-content-end  bg-gray py-1">
           <i class="fa fa-expand text-secondary fa-2x" aria-hidden="true" (click)="expandEditor()"></i>
         </div>
-        <ngx-editor [editor]="editor" editable="true" placeholder="Enter Answer" formControlName="answer" [ngClass]="{'expand-editor':expand}">
+        <ngx-editor [editor]="editor" editable="true" placeholder="Enter Answer" formControlName="description" [ngClass]="{'expand-editor':expand}">
         </ngx-editor>
         <div class="d-flex">
           <ngx-editor-menu [editor]="editor" [toolbar]="toolbar"> </ngx-editor-menu>
           <i class="fa fa-paper-plane ml-auto mr-2 fa-2x text-secondary" aria-hidden="true" (click)="submitAnswer()"></i>
         </div>
       </div>
-      <label class="text-danger" *ngIf="answerForm.get('answer').touched && answerForm.get('answer').errors"> Add Answer </label>
+      <label class="text-danger" *ngIf="answerForm.get('description').touched && answerForm.get('description').errors"> Add Answer </label>
     </form>
   </div>
 </div>

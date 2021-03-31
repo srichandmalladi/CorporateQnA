@@ -2,23 +2,24 @@
 
 namespace CorporateQnA.Model
 {
-    public class Questions
+    public class Answer
     {
         public int Id { get; set; }
 
         public int UserId { get; set; }
 
-        public string Question { get; set; }
+        public int QuestionId { get; set; }
 
         public string Description { get; set; }
 
         public DateTime DateCreated { get; set; }
 
-        public int CategoryId { get; set; }
+        public bool IsBestAnswer { get; set; }
 
-        public Questions()
+        public Answer()
         {
             this.DateCreated = DateTime.Now;
+            this.IsBestAnswer = false;
         }
     }
 }

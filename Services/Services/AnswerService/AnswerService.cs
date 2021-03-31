@@ -26,9 +26,9 @@ namespace CorporateQnA.Services
             return this.Mapper.Map<List<AnswerActivityView>>(answers);
         }
 
-        public int AddAnswer(Answers answer)
+        public int AddAnswer(Answer answer)
         {
-            var newAnswer = this.Mapper.Map<DataModel.Answers>(answer);
+            var newAnswer = this.Mapper.Map<DataModel.Answer>(answer);
             return Convert.ToInt32(this.Database.Insert(newAnswer));
         }
     }

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
-import { Activity } from '../models/activity.enum';
-import { QAActivity } from '../models/qa-activity.model';
 import { QuestionActivity } from '../models/question-activity.model';
 import { UserProfile } from '../models/user-profile.model';
 import { ActivityService } from '../services/activity.service';
@@ -87,14 +85,10 @@ export class HomeComponent implements OnInit {
   }
 
   addViewCount(questionId: number) {
-    var activity = new QAActivity({});
-    activity.questionId = questionId;
-    activity.userId = +localStorage['userId'];
-    activity.activityType = Activity.view;
-    this.activityService.addView(activity).subscribe(
+    this.activityService.addView(localStorage['userId'], questionId).subscribe(
       data => {
-        if (data!=0) {
-          this.questions.find(temp => temp.id == questionId).views += 1;
+        if (data != 0) {
+          this.refreshList();
         }
       },
       err => {
@@ -104,15 +98,11 @@ export class HomeComponent implements OnInit {
   }
 
   upvote(questionId: number, event: Event) {
-    event.stopPropagation();  
-    var activity = new QAActivity({});
-    activity.questionId = questionId;
-    activity.userId = +localStorage['userId'];
-    activity.activityType = Activity.upVote;
-    this.activityService.addUpVote(activity).subscribe(
+    event.stopPropagation();
+    this.activityService.addUpVote(localStorage['userId'], questionId).subscribe(
       data => {
         if (data!=0) {
-          this.questions.find(temp => temp.id == questionId).upVotes += 1;
+          this.refreshList();
         }
       },
       err => {
@@ -130,7 +120,7 @@ export class HomeComponent implements OnInit {
   }
 
   filterByKeyword(keyword: string) {
-    this.filteredQuestions = this.filteredQuestions.filter(temp => temp.question.match(keyword));
+    this.filteredQuestions = this.filteredQuestions.filter(temp => temp.title.match(keyword));
   }
 
   filterByCategory(id: number) {

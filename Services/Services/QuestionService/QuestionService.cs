@@ -20,9 +20,9 @@ namespace CorporateQnA.Services
             this.Mapper = mapper;
         }
 
-        public int AddQuestion(Questions question)
+        public int AddQuestion(Question question)
         {
-            var newQuestion = this.Mapper.Map<DataModel.Questions>(question);
+            var newQuestion = this.Mapper.Map<DataModel.Question>(question);
             return Convert.ToInt32(this.Database.Insert(newQuestion));
         }
 

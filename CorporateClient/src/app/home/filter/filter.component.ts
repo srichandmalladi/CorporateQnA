@@ -60,7 +60,7 @@ export class FilterComponent implements OnInit {
     });
 
     this.addQuestionForm = new FormGroup({
-      question: new FormControl('', [Validators.required]),
+      title: new FormControl('', [Validators.required]),
       description: new FormControl('', [Validators.required]),
       categoryId: new FormControl('', [Validators.required])
     });
@@ -94,7 +94,7 @@ export class FilterComponent implements OnInit {
         if (data != 0) {
           this.toastr.success("Question Added");
           this.closeModal();
-          this.refreshList();
+          this.refreshQuestions.emit();
         }
         else {
           this.toastr.error("Question not added");
@@ -106,11 +106,6 @@ export class FilterComponent implements OnInit {
       }
     );
   }
-
-  refreshList() {
-    this.refreshQuestions.emit();
-  }
-
   filter() {
     this.filterQuestions.emit(this.filtersForm.value);
   }

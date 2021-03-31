@@ -18,28 +18,46 @@ namespace CorporateQnA.Services
             this.Mapper = mapper;
         }
 
-        public int AddView(QAActivity activity)
+        public int AddView(int userId,int questionId)
         {
+            var activity=new QAActivity(){
+                UserId=userId,
+                QuestionId=questionId,
+                ActivityType=Activity.View
+            };
             var newActivity = this.Mapper.Map<DataModel.QAActivity>(activity);
             return Convert.ToInt32(this.DataBase.Insert(newActivity));
         }
 
-        public int AddUpVote(QAActivity activity)
+        public int AddUpVote(int userId, int questionId)
         {
+            var activity = new QAActivity()
+            {
+                UserId = userId,
+                QuestionId = questionId,
+                ActivityType = Activity.UpVote
+            };
+
             var newActivity = this.Mapper.Map<DataModel.QAActivity>(activity);
-            var data=this.DataBase.SingleOrDefault<DataModel.QAActivity>("where QuestionId=@0 and UserId=@1 and ActivityType=@2",newActivity.QuestionId,newActivity.UserId,newActivity.ActivityType);
+            var data=this.DataBase.SingleOrDefault<DataModel.QAActivity>("where QuestionId=@0 and UserId=@1 and ActivityType=@2 and IsDeleted=0",newActivity.QuestionId,newActivity.UserId,newActivity.ActivityType);
 
             if (data == null)
             {
                 return Convert.ToInt32(this.DataBase.Insert(newActivity));
             }
-            return 0;
+            return Convert.ToInt32(this.DataBase.Execute("UPDATE QAActivity SET IsDeleted = 1, DateDeleted=@0 WHERE Id = @1", DateTime.Now, data.Id));
         }
 
-        public int AddLikeOrDislike(QAActivity activity)
+        public int AddLikeOrDislike(int userId, int answerId, Activity activityType)
         {
+            var activity = new QAActivity()
+            {
+                UserId = userId,
+                AnswerId = answerId,
+                ActivityType = activityType
+            };
             var newActivity = this.Mapper.Map<DataModel.QAActivity>(activity);
-            var data=this.DataBase.SingleOrDefault<DataModel.QAActivity>("where AnswerId =@0 and UserId =@1",newActivity.AnswerId,newActivity.UserId);
+            var data=this.DataBase.SingleOrDefault<DataModel.QAActivity>("where AnswerId=@0 and UserId=@1 and IsDeleted=0",newActivity.AnswerId,newActivity.UserId);
 
             if (data == null)
             {
@@ -47,11 +65,11 @@ namespace CorporateQnA.Services
             }
             else if(data.ActivityType==newActivity.ActivityType)
             {
-                return 0;
+                return Convert.ToInt32(this.DataBase.Execute("UPDATE QAActivity SET IsDeleted = 1, DateDeleted=@0 WHERE Id = @1", DateTime.Now, data.Id));
             }
             else
             {
-                this.DataBase.Delete(data);
+                this.DataBase.Execute("UPDATE QAActivity SET IsDeleted = 1, DateDeleted=@0 WHERE Id = @1", DateTime.Now, data.Id);
                 return Convert.ToInt32(this.DataBase.Insert(newActivity));
             }
         }
@@ -59,7 +77,7 @@ namespace CorporateQnA.Services
         public int UpdateBestAnswer(int answerId)
         {
             var questionId = this.DataBase.SingleOrDefault<int>("select QuestionId from Answer where Id=@0", answerId);
-            var existingAnswer = this.DataBase.SingleOrDefault<DataModel.Answers>("where QuestionId=@0 and IsBestAnswer=1", questionId);
+            var existingAnswer = this.DataBase.SingleOrDefault<DataModel.Answer>("where QuestionId=@0 and IsBestAnswer=1", questionId);
 
             if (existingAnswer==null)
             {

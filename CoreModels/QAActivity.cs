@@ -16,9 +16,15 @@ namespace CorporateQnA.Model
 
         public DateTime DateCreated { get; set; }
 
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DateDeleted { get; set; }
+
         public QAActivity()
         {
             this.DateCreated = DateTime.Now;
+            this.IsDeleted = false;
+            this.DateDeleted = null;
         }
     }
 }
