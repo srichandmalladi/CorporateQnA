@@ -57,7 +57,7 @@ export class AnswersComponent {
 
   submitAnswer() {
     if (this.answerForm.valid) {
-      var newAnswer = new Answer('');
+      var newAnswer = new Answer({});
       newAnswer.answer = this.answerForm.value.answer;
       newAnswer.questionId = this.displayQuestion.id;
       this.answerService.addAnswer(newAnswer).subscribe(
@@ -81,7 +81,7 @@ export class AnswersComponent {
   }
 
   likeAnswer(answerId: number) {
-    var activity = new QAActivity('');
+    var activity = new QAActivity({});
     activity.answerId = answerId;
     activity.userId = +localStorage['userId'];
     activity.activityType = Activity.like;
@@ -98,7 +98,7 @@ export class AnswersComponent {
   }
 
   dislikeAnswer(answerId: number) {
-    var activity = new QAActivity('');
+    var activity = new QAActivity({});
     activity.answerId = answerId;
     activity.userId = +localStorage['userId'];
     activity.activityType = Activity.dislike;

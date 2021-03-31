@@ -87,7 +87,7 @@ export class HomeComponent implements OnInit {
   }
 
   addViewCount(questionId: number) {
-    var activity = new QAActivity('');
+    var activity = new QAActivity({});
     activity.questionId = questionId;
     activity.userId = +localStorage['userId'];
     activity.activityType = Activity.view;
@@ -105,7 +105,7 @@ export class HomeComponent implements OnInit {
 
   upvote(questionId: number, event: Event) {
     event.stopPropagation();  
-    var activity = new QAActivity('');
+    var activity = new QAActivity({});
     activity.questionId = questionId;
     activity.userId = +localStorage['userId'];
     activity.activityType = Activity.upVote;

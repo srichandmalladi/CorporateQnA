@@ -19,7 +19,7 @@ namespace CorporateApi.Controllers
 
         //Route: api/activity/view/add
         [Route("view/add")]
-        public Int32 PostView(QAActivity activity)
+        public int PostView(QAActivity activity)
         {
             return this.ActivityService.AddView(activity);
         }
@@ -39,10 +39,10 @@ namespace CorporateApi.Controllers
         }
 
         //Route: api/activity/upvote/updateBestAnswer/Id
-        [Route("updateBestAnswer/{AnswerId}")]
-        public int UpdateBestAnswer(int AnswerId)
+        [Route("updateBestAnswer/{answerId}")]
+        public int UpdateBestAnswer(int answerId)
         {
-            return this.ActivityService.UpdateBestAnswer(AnswerId);
+            return this.ActivityService.UpdateBestAnswer(answerId);
         }
     }
 }

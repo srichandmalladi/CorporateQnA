@@ -10,6 +10,6 @@ namespace CorporateQnA.Services
 
         int AddLikeOrDislike(QAActivity activity);
 
-        int UpdateBestAnswer(int AnswerId);
+        int UpdateBestAnswer(int answerId);
     }
 }
