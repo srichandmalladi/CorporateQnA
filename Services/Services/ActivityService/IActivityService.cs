@@ -6,7 +6,7 @@ namespace CorporateQnA.Services
     {
         int AddView(int userId, int questionId);
 
-        int AddUpVote(int userId, int questionId);
+        bool AddUpVote(int userId, int questionId);
 
         int AddLikeOrDislike(int userId, int answerId, ActivityType activityType);
 

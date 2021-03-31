@@ -23,6 +23,7 @@ export class FilterComponent implements OnInit {
   categories: Category[];
   addQuestionForm: FormGroup;
   showFilters: Array<any> = [
+    { 'name': 'All', 'value': 'all' },
     { 'name': 'My Questions', 'value': 'myQuestions' },
     { 'name': 'My Participation', 'value': 'myParticipation' },
     { 'name': 'Hot', 'value': 'hot' },
@@ -30,6 +31,7 @@ export class FilterComponent implements OnInit {
     { 'name': 'UnSolved', 'value': 'unsolved' }
   ]
   daysFilters: Array<any> = [
+    { 'name': 'All', 'value': 'all' },
     { 'name': 'Recent', 'value': 'recent' },
     { 'name': 'Last 10 days', 'value': 'last10days' },
     { 'name': 'Last 30 Days', 'value': 'last 30 days' }
@@ -58,6 +60,7 @@ export class FilterComponent implements OnInit {
       show: new FormControl(''),
       days: new FormControl('')
     });
+    this.setDefaultsForFiltersForm();
 
     this.addQuestionForm = new FormGroup({
       title: new FormControl('', [Validators.required]),
@@ -75,6 +78,12 @@ export class FilterComponent implements OnInit {
       history: true,
       keyboardShortcuts: true
     });
+  }
+
+  setDefaultsForFiltersForm() {
+    this.filtersForm.get('categoryId').patchValue(0);
+    this.filtersForm.get('show').patchValue('all');
+    this.filtersForm.get('days').patchValue('all');
   }
 
   openModal(template: TemplateRef<any>) {
@@ -112,6 +121,7 @@ export class FilterComponent implements OnInit {
 
   resetForm() {
     this.filtersForm.reset();
+    this.setDefaultsForFiltersForm();
     this.filterQuestions.emit(this.filtersForm.value);
   }
 }

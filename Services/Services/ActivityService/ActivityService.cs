@@ -29,7 +29,7 @@ namespace CorporateQnA.Services
             return Convert.ToInt32(this.DataBase.Insert(newActivity));
         }
 
-        public int AddUpVote(int userId, int questionId)
+        public bool AddUpVote(int userId, int questionId)
         {
             var activity = new QAActivity()
             {
@@ -43,9 +43,11 @@ namespace CorporateQnA.Services
 
             if (data == null)
             {
-                return Convert.ToInt32(this.DataBase.Insert(newActivity));
+                this.DataBase.Insert(newActivity);
+                return true;
             }
-            return Convert.ToInt32(this.DataBase.Execute("UPDATE QAActivity SET IsDeleted = 1, DateDeleted=@0 WHERE Id = @1", DateTime.Now, data.Id));
+            this.DataBase.Execute("UPDATE QAActivity SET IsDeleted = 1, DateDeleted=@0 WHERE Id = @1", DateTime.Now, data.Id);
+            return false;
         }
 
         public int AddLikeOrDislike(int userId, int answerId, ActivityType activityType)
@@ -85,7 +87,8 @@ namespace CorporateQnA.Services
             }
             else if (existingAnswer.Id == answerId)
             {
-                return Convert.ToInt32(this.DataBase.Execute("UPDATE Answer SET IsBestAnswer = 0 WHERE Id = @0", answerId));
+                this.DataBase.Execute("UPDATE Answer SET IsBestAnswer = 0 WHERE Id = @0", answerId);
+                return 0;
             }
             else
             {

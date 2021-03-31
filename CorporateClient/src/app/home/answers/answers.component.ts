@@ -62,7 +62,6 @@ export class AnswersComponent {
         data => {
           if (data != 0) {
             this.toastr.success("answer Added");
-            this.refreshQuestions.emit();
             this.loadAnswers();
             this.editor.setContent('');
           }
@@ -106,8 +105,8 @@ export class AnswersComponent {
   }
 
   changeBestAnswer(id: number) {
-    this.activityService.updateBestAnswer(id).subscribe(() => {
-      this.refreshQuestions.emit();
+    this.activityService.updateBestAnswer(id).subscribe((data) => {
+      this.refreshQuestions.emit(data);
       this.loadAnswers();
     });
   }

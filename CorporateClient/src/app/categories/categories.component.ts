@@ -38,10 +38,15 @@ export class CategoriesComponent implements OnInit {
       searchText: new FormControl(''),
       showFilter: new FormControl('')
     })
+    this.setDefaultsForCategoryFilter();
   }
 
   ngOnInit(): void {
     this.getCategoriesActivity();
+  }
+
+  setDefaultsForCategoryFilter() {
+    this.categoryFilter.get('showFilter').patchValue(0);
   }
 
   openModal(template: TemplateRef<any>) {
@@ -86,6 +91,7 @@ export class CategoriesComponent implements OnInit {
 
   resetFilters() {
     this.categoryFilter.reset();
+    this.setDefaultsForCategoryFilter();
     this.getCategoriesActivity();
   }
 }

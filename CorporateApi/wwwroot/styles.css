@@ -267,6 +267,11 @@ app-top-nav-bar {
   border-radius: 5px;
 }
 
+.select-question-hint {
+  position: absolute;
+  top: 350px;
+}
+
 .bg-light-gray {
   background-color: #f4f5f8;
 }

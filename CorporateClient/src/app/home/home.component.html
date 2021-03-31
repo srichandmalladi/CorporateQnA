@@ -1,9 +1,9 @@
 <app-filter *ngIf="showFilters" (refreshQuestions)="refreshList()" (filterQuestions)="filterQuestions($event)"></app-filter>
 <app-display-profile *ngIf="!showFilters" [user]="user" (loadQuestions)="loadQuestions($event)"></app-display-profile>
 
-<div class="m-3 d-sm-flex question-list">
+<div class="m-3 d-sm-flex question-list" *ngIf="filteredQuestions">
   <div class="col-sm-7 px-0">
-    <div *ngFor="let question of filteredQuestions" class="border" (click)="questionSelected(question.id)" [ngClass]="{'active-question': selectedQuestion == question}">
+    <div *ngFor="let question of filteredQuestions" class="border cursor-pointer" (click)="questionSelected(question.id)" [ngClass]="{'active-question': selectedQuestion == question}">
       <div [ngClass]="{'resolved-question': question.isSolved}"></div>
       <div class="d-flex pt-3 pl-1 pr-3">
         <img src="{{question.profilePic}}" class="ml-3 rounded-circle profile-pic-min">
@@ -38,16 +38,19 @@
       </div>
     </div>
   </div>
-  <div class="col-sm-5 px-0 d-flex  answers-list">
+  <div class="col-sm-5 px-0 d-flex">
     <div *ngIf = "!isQuestionSelected; then thenBlock else elseBlock"></div>
       <ng-template #thenBlock>
-        <div class="d-flex-column w-100 align-self-center">
+        <div class="d-flex-column w-100 select-question-hint" *ngIf="filteredQuestions.length>0">
           <i class="fa fa-arrow-left text-secondary text-center fa-5x d-block" aria-hidden="false"></i>
           <p class="text-center">Select a Question to See Details</p>
         </div>
       </ng-template>
       <ng-template #elseBlock>
-        <app-answers [displayQuestion]="selectedQuestion" (refreshQuestions)="refreshList()" class="w-100 answers-list"></app-answers>
+        <app-answers [displayQuestion]="selectedQuestion" (refreshQuestions)="updatedBestAnswer($event)" class="w-100 answers-list"></app-answers>
       </ng-template>
   </div>
+</div>
+<div *ngIf="filteredQuestions.length==0" class="m-5 text-center">
+  <h3 class="text-secondary">No questions to Display</h3>
 </div>
