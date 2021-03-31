@@ -10,21 +10,19 @@
     <div class="form-group col-md-2">
       <label>Category</label>
       <select class="form-control" formControlName="categoryId"  (change)="filter()">
-        <option selected value=0>All</option>
+        <option value=0>All</option>
         <option *ngFor="let category of categories" value="{{category.id}}">{{category.name}}</option>
       </select>
     </div>
     <div class="form-group col-md-2">
       <label>Show</label>
       <select class="form-control" formControlName="show" (change)="filter()">
-        <option selected value="all">All</option>
         <option *ngFor="let filter of showFilters" value="{{filter.value}}">{{filter.name}}</option>
       </select>
     </div>
     <div class="form-group col-md-2">
       <label>Sort by</label>
       <select class="form-control" formControlName="days" (change)="filter()">
-        <option selected value="all">All</option>
         <option *ngFor="let filter of daysFilters" value="{{filter.value}}">{{filter.name}}</option>
       </select>
     </div>

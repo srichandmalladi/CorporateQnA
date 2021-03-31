@@ -3,6 +3,7 @@ using System;
 
 using DataModel = CorporateQnA.Data;
 using CorporateQnA.Model;
+using System.Collections.Generic;
 
 namespace CorporateQnA.Services
 {
@@ -29,7 +30,7 @@ namespace CorporateQnA.Services
             return Convert.ToInt32(this.DataBase.Insert(newActivity));
         }
 
-        public int AddUpVote(int userId, int questionId)
+        public bool AddUpVote(int userId, int questionId)
         {
             var activity = new QAActivity()
             {
@@ -43,9 +44,13 @@ namespace CorporateQnA.Services
 
             if (data == null)
             {
-                return Convert.ToInt32(this.DataBase.Insert(newActivity));
+                this.DataBase.Insert(newActivity);
+                return true;
             }
-            return Convert.ToInt32(this.DataBase.Execute("UPDATE QAActivity SET IsDeleted = 1, DateDeleted=@0 WHERE Id = @1", DateTime.Now, data.Id));
+            data.IsDeleted = true;
+            data.DateDeleted = DateTime.UtcNow;
+            this.DataBase.Update(data, new List<string> { "IsDeleted", "DateDeleted" });
+            return false;
         }
 
         public int AddLikeOrDislike(int userId, int answerId, ActivityType activityType)
@@ -65,32 +70,41 @@ namespace CorporateQnA.Services
             }
             else if(data.ActivityType==newActivity.ActivityType)
             {
-                return Convert.ToInt32(this.DataBase.Execute("UPDATE QAActivity SET IsDeleted = 1, DateDeleted=@0 WHERE Id = @1", DateTime.Now, data.Id));
+                data.IsDeleted = true;
+                data.DateDeleted = DateTime.UtcNow;
+                return Convert.ToInt32(this.DataBase.Update(data, new List<string> { "IsDeleted", "DateDeleted" }));
             }
             else
             {
-                this.DataBase.Execute("UPDATE QAActivity SET IsDeleted = 1, DateDeleted=@0 WHERE Id = @1", DateTime.Now, data.Id);
+                data.IsDeleted = true;
+                data.DateDeleted = DateTime.UtcNow;
+                this.DataBase.Update(data, new List<string> { "IsDeleted", "DateDeleted" });
                 return Convert.ToInt32(this.DataBase.Insert(newActivity));
             }
         }
 
         public int UpdateBestAnswer(int answerId)
         {
-            var questionId = this.DataBase.SingleOrDefault<int>("select QuestionId from Answer where Id=@0", answerId);
-            var existingAnswer = this.DataBase.SingleOrDefault<DataModel.Answer>("where QuestionId=@0 and IsBestAnswer=1", questionId);
+            var newBestAnswer = this.DataBase.SingleOrDefault<Answer>("where Id=@0", answerId);
+            var existingBestAnswer = this.DataBase.SingleOrDefault<DataModel.Answer>("where QuestionId=@0 and IsBestAnswer=1", newBestAnswer.QuestionId);
 
-            if (existingAnswer==null)
+            if (existingBestAnswer==null)
             {
-                return Convert.ToInt32(this.DataBase.Execute("UPDATE Answer SET IsBestAnswer = 1 WHERE Id = @0", answerId)); 
+                newBestAnswer.IsBestAnswer = true;
+                return Convert.ToInt32(this.DataBase.Update(newBestAnswer, new List<string> { "IsBestAnswer" })); 
             }
-            else if (existingAnswer.Id == answerId)
+            else if (existingBestAnswer.Id == answerId)
             {
-                return Convert.ToInt32(this.DataBase.Execute("UPDATE Answer SET IsBestAnswer = 0 WHERE Id = @0", answerId));
+                newBestAnswer.IsBestAnswer = false;
+                this.DataBase.Update(newBestAnswer, new List<string> { "IsBestAnswer" });
+                return 0;
             }
             else
             {
-                this.DataBase.Execute("UPDATE Answer SET IsBestAnswer = 1 WHERE Id = @0", answerId);
-                return Convert.ToInt32(this.DataBase.Execute("UPDATE Answer SET IsBestAnswer = 0 WHERE Id = @0", existingAnswer.Id));
+                newBestAnswer.IsBestAnswer = true;
+                this.DataBase.Update(newBestAnswer, new List<string> { "IsBestAnswer" });
+                existingBestAnswer.IsBestAnswer = false;
+                return Convert.ToInt32(this.DataBase.Update(existingBestAnswer, new List<string> { "IsBestAnswer" }));
             }
         }
     }

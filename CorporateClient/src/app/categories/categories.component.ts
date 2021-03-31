@@ -36,8 +36,8 @@ export class CategoriesComponent implements OnInit {
 
     this.categoryFilter = new FormGroup({
       searchText: new FormControl(''),
-      showFilter: new FormControl('')
-    })
+      showFilter: new FormControl(0)
+    });
   }
 
   ngOnInit(): void {
@@ -85,7 +85,8 @@ export class CategoriesComponent implements OnInit {
   }
 
   resetFilters() {
-    this.categoryFilter.reset();
-    this.getCategoriesActivity();
+    this.categoryFilter.get('searchText').setValue('');
+    this.categoryFilter.get('showFilter').setValue(0);
+    this.filterCategories();
   }
 }

@@ -23,6 +23,7 @@ export class FilterComponent implements OnInit {
   categories: Category[];
   addQuestionForm: FormGroup;
   showFilters: Array<any> = [
+    { 'name': 'All', 'value': 'all' },
     { 'name': 'My Questions', 'value': 'myQuestions' },
     { 'name': 'My Participation', 'value': 'myParticipation' },
     { 'name': 'Hot', 'value': 'hot' },
@@ -30,6 +31,7 @@ export class FilterComponent implements OnInit {
     { 'name': 'UnSolved', 'value': 'unsolved' }
   ]
   daysFilters: Array<any> = [
+    { 'name': 'All', 'value': 'all' },
     { 'name': 'Recent', 'value': 'recent' },
     { 'name': 'Last 10 days', 'value': 'last10days' },
     { 'name': 'Last 30 Days', 'value': 'last 30 days' }
@@ -54,9 +56,9 @@ export class FilterComponent implements OnInit {
   {
     this.filtersForm = new FormGroup({
       keyword: new FormControl(''),
-      categoryId: new FormControl(''),
-      show: new FormControl(''),
-      days: new FormControl('')
+      categoryId: new FormControl(0),
+      show: new FormControl('all'),
+      days: new FormControl('all')
     });
 
     this.addQuestionForm = new FormGroup({
@@ -111,7 +113,10 @@ export class FilterComponent implements OnInit {
   }
 
   resetForm() {
-    this.filtersForm.reset();
+    this.filtersForm.get('keyword').setValue('');
+    this.filtersForm.get('categoryId').setValue(0);
+    this.filtersForm.get('show').setValue('all');
+    this.filtersForm.get('days').setValue('all');
     this.filterQuestions.emit(this.filtersForm.value);
   }
 }

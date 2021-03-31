@@ -26,7 +26,7 @@ namespace CorporateApi.Controllers
 
         //Route: api/activity/userId/add/upvote/questionId
         [Route("{userId}/add/upvote/{questionId}")]
-        public int PostUpvote(int userId, int questionId)
+        public bool PostUpvote(int userId, int questionId)
         {
             return this.ActivityService.AddUpVote(userId, questionId);
         }

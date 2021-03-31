@@ -88,7 +88,7 @@ export class HomeComponent implements OnInit {
     this.activityService.addView(localStorage['userId'], questionId).subscribe(
       data => {
         if (data != 0) {
-          this.refreshList();
+          this.questions.find(data => data.id == questionId).views += 1;
         }
       },
       err => {
@@ -101,8 +101,11 @@ export class HomeComponent implements OnInit {
     event.stopPropagation();
     this.activityService.addUpVote(localStorage['userId'], questionId).subscribe(
       data => {
-        if (data!=0) {
-          this.refreshList();
+        if (data) {
+          this.questions.find(data => data.id == questionId).upVotes += 1;
+        }
+        else {
+          this.questions.find(data => data.id == questionId).upVotes -= 1;
         }
       },
       err => {
@@ -153,6 +156,15 @@ export class HomeComponent implements OnInit {
     }
     if (days == 'last30days') {
       this.filteredQuestions = this.filteredQuestions.filter(temp => Math.ceil(Math.abs(Date.now() - new Date(temp.dateCreated).getTime()) / (1000 * 3600 * 24)) <= 30);
+    }
+  }
+
+  updatedBestAnswer(eventId: number) {
+    if (eventId != 0) {
+      this.questions.find(data => data.id == this.selectedQuestion.id).isSolved = true;
+    }
+    else {
+      this.questions.find(data => data.id == this.selectedQuestion.id).isSolved = false;
     }
   }
 }
