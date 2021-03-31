@@ -4,6 +4,11 @@ namespace CorporateQnA.Model
 {
     public class QAActivity
     {
+        public QAActivity()
+        {
+            this.DateCreated = DateTime.Now;
+        }
+            
         public int Id { get; set; }
 
         public int QuestionId { get; set; }
@@ -12,19 +17,12 @@ namespace CorporateQnA.Model
 
         public int UserId { get; set; }
 
-        public Activity ActivityType { get; set; }
+        public ActivityType ActivityType { get; set; }
 
         public DateTime DateCreated { get; set; }
 
         public bool IsDeleted { get; set; }
 
         public DateTime? DateDeleted { get; set; }
-
-        public QAActivity()
-        {
-            this.DateCreated = DateTime.Now;
-            this.IsDeleted = false;
-            this.DateDeleted = null;
-        }
     }
 }

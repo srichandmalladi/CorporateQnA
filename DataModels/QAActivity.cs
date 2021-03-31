@@ -15,7 +15,7 @@ namespace CorporateQnA.Data
 
         public int UserId { get; set; }
 
-        public Activity ActivityType { get; set; }
+        public ActivityType ActivityType { get; set; }
 
         public DateTime DateCreated { get; set; }
 

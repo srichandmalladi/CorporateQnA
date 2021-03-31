@@ -23,7 +23,7 @@ namespace CorporateQnA.Services
             var activity=new QAActivity(){
                 UserId=userId,
                 QuestionId=questionId,
-                ActivityType=Activity.View
+                ActivityType=ActivityType.View
             };
             var newActivity = this.Mapper.Map<DataModel.QAActivity>(activity);
             return Convert.ToInt32(this.DataBase.Insert(newActivity));
@@ -35,7 +35,7 @@ namespace CorporateQnA.Services
             {
                 UserId = userId,
                 QuestionId = questionId,
-                ActivityType = Activity.UpVote
+                ActivityType = ActivityType.UpVote
             };
 
             var newActivity = this.Mapper.Map<DataModel.QAActivity>(activity);
@@ -48,7 +48,7 @@ namespace CorporateQnA.Services
             return Convert.ToInt32(this.DataBase.Execute("UPDATE QAActivity SET IsDeleted = 1, DateDeleted=@0 WHERE Id = @1", DateTime.Now, data.Id));
         }
 
-        public int AddLikeOrDislike(int userId, int answerId, Activity activityType)
+        public int AddLikeOrDislike(int userId, int answerId, ActivityType activityType)
         {
             var activity = new QAActivity()
             {

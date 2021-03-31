@@ -8,7 +8,7 @@ namespace CorporateQnA.Services
 
         int AddUpVote(int userId, int questionId);
 
-        int AddLikeOrDislike(int userId, int answerId, Activity activityType);
+        int AddLikeOrDislike(int userId, int answerId, ActivityType activityType);
 
         int UpdateBestAnswer(int answerId);
     }

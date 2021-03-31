@@ -35,14 +35,14 @@ namespace CorporateApi.Controllers
         [Route("{userId}/add/like/{questionId}")]
         public int PostLike(int userId, int questionId)
         {
-           return this.ActivityService.AddLikeOrDislike(userId, questionId, Activity.Like);
+           return this.ActivityService.AddLikeOrDislike(userId, questionId, ActivityType.Like);
         }
 
         //Route: api/activity/userId/add/dislike/answerId
         [Route("{userId}/add/dislike/{answerId}")]
         public int PostDislike(int userId, int answerId)
         {
-            return this.ActivityService.AddLikeOrDislike(userId, answerId, Activity.Dislike);
+            return this.ActivityService.AddLikeOrDislike(userId, answerId, ActivityType.Dislike);
         }
 
         //Route: api/activity/upvote/updateBestAnswer/Id
