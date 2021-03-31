@@ -12,9 +12,9 @@ namespace CorporateQnA.Services
         public AutoMapperProfile()
         {
             CreateMap<UserModel, DataModel.Users>().ReverseMap();
-            CreateMap<Questions, DataModel.Questions>().ReverseMap();
+            CreateMap<Question, DataModel.Question>().ReverseMap();
             CreateMap<Category, DataModel.Category>().ReverseMap();
-            CreateMap<Answers, DataModel.Answers>().ReverseMap();
+            CreateMap<Answer, DataModel.Answer>().ReverseMap();
             CreateMap<QAActivity, DataModel.QAActivity>().ReverseMap();
             CreateMap<UserProfileView, DataModel.Users>().ReverseMap();
             CreateMap<QuestionActivityView, DataModel.View.QuestionActivityView>().ReverseMap();

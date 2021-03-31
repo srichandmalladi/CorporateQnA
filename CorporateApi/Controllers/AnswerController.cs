@@ -27,7 +27,7 @@ namespace CorporateApi.Controllers
 
         //Route: api/answer/add
         [Route("add")]
-        public int PostAnswer(Answers answer)
+        public int PostAnswer(Answer answer)
         {
             return this.AnswerService.AddAnswer(answer);
         }

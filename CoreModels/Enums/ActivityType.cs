@@ -1,6 +1,6 @@
 ﻿namespace CorporateQnA.Model
 {
-    public enum Activity
+    public enum ActivityType
     {
         None=0,
         Like,

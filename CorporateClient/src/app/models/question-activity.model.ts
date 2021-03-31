@@ -1,6 +1,6 @@
 export class QuestionActivity {
   id: number;
-  question: string;
+  title: string;
   description: string;
   userId: number;
   userName: string;
@@ -14,7 +14,7 @@ export class QuestionActivity {
 
   constructor(args) {
     this.id = args.id;
-    this.question = args.question;
+    this.title = args.title;
     this.description = args.description;
     this.userId = args.userId;
     this.userName = args.userName;

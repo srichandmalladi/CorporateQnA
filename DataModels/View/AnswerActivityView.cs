@@ -14,7 +14,7 @@ namespace CorporateQnA.Data.View
 
         public int QuestionId { get; set; }
 
-        public string Answer { get; set; }
+        public string Description { get; set; }
 
         public bool IsBestAnswer { get; set; }
 

@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { QAActivity } from '../models/qa-activity.model';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -13,16 +11,21 @@ export class ActivityService {
 
   constructor(private http: HttpClient) { }
 
-  addView(activity: QAActivity) {
-    return this.http.post(this.baseURL + "view/add", activity);
+  addView(userId: number, questionId: number) {
+
+    return this.http.get(this.baseURL + userId + "/add/view/" + questionId);
   }
 
-  addUpVote(activity: QAActivity) {
-    return this.http.post(this.baseURL + "upvote/add", activity);
+  addUpVote(userId: number, questionId: number) {
+    return this.http.get(this.baseURL + userId + "/add/upvote/" + questionId);
   }
 
-  likeOrDislike(activity: QAActivity) {
-    return this.http.post(this.baseURL + "likeOrDislike/add", activity);
+  addLike(userId: number, answerId: number) {
+    return this.http.get(this.baseURL + userId + "/add/like/" + answerId);
+  }
+
+  addDislike(userId: number, answerId: number) {
+    return this.http.get(this.baseURL + userId + "/add/dislike/" + answerId);
   }
 
   updateBestAnswer(id: number) {

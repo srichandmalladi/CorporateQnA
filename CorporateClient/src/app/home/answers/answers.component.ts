@@ -1,12 +1,10 @@
-import { Component, Input} from '@angular/core';
+import { Component, EventEmitter, Input, Output} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Editor, Toolbar} from 'ngx-editor';
 import { ToastrService } from 'ngx-toastr';
 
-import { Activity } from '../../models/activity.enum';
 import { Answer } from '../../models/answer.model';
 import { AnswersActivity } from '../../models/answers-activity.model';
-import { QAActivity } from '../../models/qa-activity.model';
 import { QuestionActivity } from '../../models/question-activity.model';
 import { ActivityService } from '../../services/activity.service';
 import { AnswerService } from '../../services/answer.service';
@@ -17,7 +15,7 @@ import { AnswerService } from '../../services/answer.service';
 })
 
 export class AnswersComponent {
-
+  @Output() refreshQuestions: EventEmitter<any> = new EventEmitter();
   @Input() displayQuestion: QuestionActivity;
   answers: AnswersActivity[];
   editor: Editor = new Editor;
@@ -36,7 +34,7 @@ export class AnswersComponent {
     private toastr: ToastrService,)
   {
     this.answerForm = new FormGroup({
-      answer: new FormControl('', [Validators.required])
+      description: new FormControl('', [Validators.required])
     });
     this.loggedUser = +localStorage['userId'];
   }
@@ -58,12 +56,13 @@ export class AnswersComponent {
   submitAnswer() {
     if (this.answerForm.valid) {
       var newAnswer = new Answer({});
-      newAnswer.answer = this.answerForm.value.answer;
+      newAnswer.description = this.answerForm.value.description;
       newAnswer.questionId = this.displayQuestion.id;
       this.answerService.addAnswer(newAnswer).subscribe(
         data => {
           if (data != 0) {
             this.toastr.success("answer Added");
+            this.refreshQuestions.emit();
             this.loadAnswers();
             this.editor.setContent('');
           }
@@ -81,11 +80,7 @@ export class AnswersComponent {
   }
 
   likeAnswer(answerId: number) {
-    var activity = new QAActivity({});
-    activity.answerId = answerId;
-    activity.userId = +localStorage['userId'];
-    activity.activityType = Activity.like;
-    this.activityService.likeOrDislike(activity).subscribe(
+    this.activityService.addLike(localStorage['userId'], answerId).subscribe(
       data => {
         if (data!=0) {
           this.loadAnswers();
@@ -98,11 +93,7 @@ export class AnswersComponent {
   }
 
   dislikeAnswer(answerId: number) {
-    var activity = new QAActivity({});
-    activity.answerId = answerId;
-    activity.userId = +localStorage['userId'];
-    activity.activityType = Activity.dislike;
-    this.activityService.likeOrDislike(activity).subscribe(
+    this.activityService.addDislike(localStorage['userId'],answerId).subscribe(
       data => {
         if (data!=0) {
           this.loadAnswers();
@@ -115,7 +106,9 @@ export class AnswersComponent {
   }
 
   changeBestAnswer(id: number) {
-    this.activityService.updateBestAnswer(id).subscribe(() =>
-      this.loadAnswers());
+    this.activityService.updateBestAnswer(id).subscribe(() => {
+      this.refreshQuestions.emit();
+      this.loadAnswers();
+    });
   }
 }

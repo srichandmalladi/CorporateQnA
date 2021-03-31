@@ -20,7 +20,7 @@ namespace CorporateApi.Controllers
 
         //Route: api/question/add
         [Route("add")]
-        public int PostQuestion(Questions question)
+        public int PostQuestion(Question question)
         {
             return this.QuestionService.AddQuestion(question);
         }

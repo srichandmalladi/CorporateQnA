@@ -9,6 +9,6 @@ namespace CorporateQnA.Services
     {
         IEnumerable<AnswerActivityView> GetAnswersActivity(int questionId);
 
-        int AddAnswer(Answers answer);
+        int AddAnswer(Answer answer);
     }
 }

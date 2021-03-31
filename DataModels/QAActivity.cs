@@ -15,8 +15,12 @@ namespace CorporateQnA.Data
 
         public int UserId { get; set; }
 
-        public Activity ActivityType { get; set; }
+        public ActivityType ActivityType { get; set; }
 
         public DateTime DateCreated { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DateDeleted { get; set; }
     }
 }

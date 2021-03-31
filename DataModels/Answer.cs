@@ -4,7 +4,7 @@ using System;
 namespace CorporateQnA.Data
 {
     [TableName("Answer")]
-    public class Answers
+    public class Answer
     {
         public int Id { get; set; }
 
@@ -12,7 +12,7 @@ namespace CorporateQnA.Data
 
         public int QuestionId { get; set; }
 
-        public string Answer { get; set; }
+        public string Description { get; set; }
 
         public DateTime DateCreated { get; set; }
 

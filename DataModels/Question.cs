@@ -4,13 +4,13 @@ using System;
 namespace CorporateQnA.Data
 {
     [TableName("Question")]
-    public class Questions
+    public class Question
     {
         public int Id { get; set; }
 
         public int UserId { get; set; }
 
-        public string Question { get; set; }
+        public string Title { get; set; }
 
         public string Description { get; set; }
 
